@@ -1,0 +1,22 @@
+﻿@using Apolo.Web.Util
+<!-- Menu -->
+<div class="menu">
+    <ul class="list">
+        <li class="header">MENÚ PRINCIPAL</li>
+
+        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Home$", "active")">
+            <a href="@Url.Action("Index","Home", new { area = "Therapist" })">
+                <i class="material-icons">home</i>
+                <span>Inicio</span>
+            </a>
+        </li>
+
+        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Home\/Patients", "active")">
+            <a href="@Url.Action("Patients","Home", new { area = "Therapist" })">
+                <i class="material-icons">accessibility</i>
+                <span>Pacientes</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- #Menu -->

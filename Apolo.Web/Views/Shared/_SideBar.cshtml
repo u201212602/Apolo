@@ -1,0 +1,26 @@
+﻿@using Apolo.Core.Model
+@{
+    string fullName = (Session[Constants.SESSION_USER] as Apolo.Core.Model.Security.User)?.FirstName?.ToString() + " " + (Session[Constants.SESSION_USER] as Apolo.Core.Model.Security.User)?.LastName?.ToString();
+    string role = (Session[Constants.SESSION_USER] as Apolo.Core.Model.Security.User)?.Role?.ToString();
+}
+
+<section>
+    <!-- Left Sidebar -->
+    <aside id="leftsidebar" class="sidebar">
+
+        @Html.Partial("_SideBarHeader")
+        @Html.Partial("_SideBarBody");
+
+        <!-- Footer -->
+        <div class="legal">
+            <div class="copyright">
+                &copy; @DateTime.Now.Year <a href="javascript:void(0);">Intranet Apolo</a>.
+            </div>
+            <div class="version">
+                <b>Versión: </b> 0.0.1
+            </div>
+        </div>
+        <!-- #Footer -->
+    </aside>
+    <!-- #END# Left Sidebar -->
+</section>
