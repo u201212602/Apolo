@@ -14,6 +14,8 @@ namespace Apolo.Core.Model.Security
 
         public string LastName { get; set; }
 
+        public string Sex { get; set; }
+
         public DateTime? Birthday { get; set; }
 
         public string Details { get; set; }

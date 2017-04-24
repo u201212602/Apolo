@@ -3,7 +3,53 @@
     ViewBag.Title = "Pacientes";
 }
 
+@section Styles {
+    @Styles.Render("~/Assets/plugins/datatables/css/datatables.min.css")
+}
+
 <div class="block-header">
     <h2>@(ViewBag.Title?.ToString()?.ToUpper())</h2>
 </div>
 
+<div class="card">
+    <div class="card body">
+        <div class="dataTables_wrapper">
+            <table id="patients-table" class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>Sexo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>123</td>
+                        <td>Franco</td>
+                        <td>Cáceres</td>
+                        <td>22</td>
+                        <td>M</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Assets/plugins/datatables/js/datatables.min.js")
+
+    <script>
+        $(function () {
+            $("#patients-table").DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
+}

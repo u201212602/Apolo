@@ -19,7 +19,7 @@ namespace Apolo.Core.Data
         private User GetAdminUser()
         {
             Guid guid = new Guid();
-            byte[] avatar = System.IO.File.ReadAllBytes(@"D:\Documents\Visual Studio 2017\Projects\Apolo\Apolo.Web\Assets\temp\jsandoval.png");
+            byte[] avatar = System.IO.File.ReadAllBytes(@".\temp\jsandoval.png");
             User user = new User
             {
                 FirstName = "José",
@@ -37,7 +37,7 @@ namespace Apolo.Core.Data
         private User GetTherapistUser()
         {
             Guid guid = new Guid();
-            byte[] avatar = System.IO.File.ReadAllBytes(@"D:\Documents\Visual Studio 2017\Projects\Apolo\Apolo.Web\Assets\temp\fcaceres.png");
+            byte[] avatar = System.IO.File.ReadAllBytes(@".\temp\fcaceres.png");
             User user = new User
             {
                 FirstName = "Franco",
@@ -55,7 +55,7 @@ namespace Apolo.Core.Data
         private User GetPatientUser()
         {
             Guid guid = new Guid();
-            byte[] avatar = System.IO.File.ReadAllBytes(@"D:\Documents\Visual Studio 2017\Projects\Apolo\Apolo.Web\Assets\temp\sccahua.png");
+            byte[] avatar = System.IO.File.ReadAllBytes(@".\temp\sccahua.png");
             User user = new User
             {
                 FirstName = "Sheila",

@@ -221,6 +221,8 @@
     <Content Include="Assets\plugins\bootstrap\css\bootstrap.css" />
     <Content Include="Assets\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Assets\plugins\datatables\css\datatables.min.css" />
+    <Content Include="Assets\plugins\datatables\js\datatables.min.js" />
     <Content Include="Assets\plugins\jquery\jquery-1.10.2.js" />
     <Content Include="Assets\plugins\jquery\jquery.validate.js" />
     <Content Include="Assets\plugins\node-waves\css\waves.css" />
