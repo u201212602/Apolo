@@ -1,5 +1,6 @@
 ﻿using Apolo.Core.Business.Common;
 using Apolo.Core.Data;
+using Apolo.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,19 @@ namespace Apolo.Core.Business
     {
         ApoloContext context = new ApoloContext();
 
-        public OperationResult GetUser(string username)
+        public OperationResult GetUserByUsername(string username)
         {
             return new OperationResult { RequestedObject = context.Users.SingleOrDefault(x => x.Username == username) };
+        }
+
+        public OperationResult GetUserByID(int id)
+        {
+            return new OperationResult { RequestedObject = context.Users.SingleOrDefault(x => x.ID == id) };
+        }
+
+        public OperationResult GetAllPatients()
+        {
+            return new OperationResult { RequestedObject = context.Users.Where(x => x.Role == Constants.Roles.PATIENT).ToList() };
         }
     }
 }

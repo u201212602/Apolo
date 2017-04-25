@@ -45,7 +45,7 @@ namespace Apolo.Web.Controllers
                 return View(viewModel);
             }
 
-            OperationResult operationResult = securityService.GetUser(viewModel.Username);
+            OperationResult operationResult = securityService.GetUserByUsername(viewModel.Username);
             if(operationResult.RequestedObject != null)
             {
                 User user = operationResult.RequestedObject as User;
@@ -65,7 +65,7 @@ namespace Apolo.Web.Controllers
                         switch(user.Role)
                         {
                             case Constants.Roles.ADMINISTRATOR: return RedirectToAction("Index", "Home", new { area = Constants.Areas.ADMINISTRATOR });
-                            case Constants.Roles.THERAPIST: return RedirectToAction("Patients", "Home", new { area = Constants.Areas.THERAPIST });
+                            case Constants.Roles.THERAPIST: return RedirectToAction("Index", "Patient", new { area = Constants.Areas.THERAPIST });
                             case Constants.Roles.PATIENT: return RedirectToAction("Index", "Home", new { area = Constants.Areas.PATIENT });
                         }
                     }

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Apolo.Core.Model.Treatment;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apolo.Core.Model.Security
 {
@@ -14,7 +12,9 @@ namespace Apolo.Core.Model.Security
 
         public string LastName { get; set; }
 
-        public string Sex { get; set; }
+        public string Gender { get; set; }
+
+        public string Condition { get; set; }
 
         public DateTime? Birthday { get; set; }
 
@@ -29,5 +29,10 @@ namespace Apolo.Core.Model.Security
         public Guid Salt { get; set; }
 
         public string Role { get; set; }
+
+
+
+        public virtual ICollection<Routine> SupervisedRoutines { get; set; }
+        public virtual ICollection<Routine> PrescribedRoutines { get; set; }
     }
 }

@@ -3132,7 +3132,7 @@ a {
 }
 
 section.content {
-    margin: 100px 15px 0 315px;
+    margin: 100px 15px 0 215px;
     -moz-transition: 0.5s;
     -o-transition: 0.5s;
     -webkit-transition: 0.5s;
@@ -3937,6 +3937,7 @@ section.content {
         .card .body .col-lg-12 {
             margin-bottom: 20px;
         }
+
 
 /* Infobox ===================================== */
 .info-box {

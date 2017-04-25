@@ -15,7 +15,7 @@ namespace Apolo.Web.Controllers
         // GET: Util
         public ActionResult UserAvatar(string username)
         {
-            OperationResult operationResult = securityService.GetUser(username);
+            OperationResult operationResult = securityService.GetUserByUsername(username);
             User user = operationResult.RequestedObject as User;
             return File(user.Avatar, "image/png");
         }
