@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Common\OperationResult.cs" />
+    <Compile Include="Business\RoutineService.cs" />
     <Compile Include="Business\SecurityService.cs" />
     <Compile Include="Data\ApoloContext.cs" />
     <Compile Include="Data\ApoloInitializer.cs" />

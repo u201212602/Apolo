@@ -7,7 +7,7 @@
 
 <div class="login-box">
     <div class="logo">
-        <a href="javascript:void(0);">Intranet <strong>Apolo</strong></a>
+        <a href="javascript:void(0);">Solución <strong>Apolo</strong></a>
         <small>Iniciar Sesión</small>
     </div>
     <div class="card">
@@ -34,7 +34,7 @@
                         <i class="material-icons">person</i>
                     </span>
                     <div class="form-line">
-                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Username), @autofocus = "autofocus" })
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @required = "required", @placeholder = Html.DisplayNameFor(m => m.Username), @autofocus = "autofocus" })
                     </div>
                     @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
                 </div>
@@ -43,7 +43,7 @@
                         <i class="material-icons">lock</i>
                     </span>
                     <div class="form-line">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(m => m.Password).ToHtmlString()) })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "required", @placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(m => m.Password).ToHtmlString()) })
                     </div>
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
@@ -59,4 +59,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("form").validate();
+        });
+    </script>
 }

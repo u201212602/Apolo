@@ -220,8 +220,11 @@
     <Content Include="Assets\plugins\datatables\js\datatables.min.js" />
     <Content Include="Assets\plugins\jquery\jquery-1.10.2.js" />
     <Content Include="Assets\plugins\jquery\jquery.validate.js" />
+    <Content Include="Assets\plugins\morris\css\morris.css" />
+    <Content Include="Assets\plugins\morris\js\morris.js" />
     <Content Include="Assets\plugins\node-waves\css\waves.css" />
     <Content Include="Assets\plugins\node-waves\js\waves.js" />
+    <Content Include="Assets\plugins\raphael\js\raphael.min.js" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -245,7 +248,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrator\Models\" />
     <Folder Include="Areas\Therapist\Models\" />
-    <Folder Include="Areas\Therapist\Views\Routine\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -310,6 +312,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Therapist\Views\Patient\Summary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Routine\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

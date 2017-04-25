@@ -18,5 +18,11 @@
 
         public int WorkDayID { get; set; }
         public virtual WorkDay WorkDay { get; set; }
+
+
+        public bool IsFinished()
+        {
+            return MinutesPlayed >= DurationInMinutes;
+        }
     }
 }

@@ -12,7 +12,7 @@
     <h2>@(ViewBag.Title?.ToString()?.ToUpper())</h2>
 </div>
 
-<div class="card" style="height: 83vh;">
+<div class="card" style="height: 80vh;">
     <div class="card body" style="height: 100%;">
         <div class="dataTables_wrapper">
             <table id="patients-table" class="table table-hover table-responsive">
@@ -37,7 +37,7 @@
                             <td>@(DateTime.Now.Year-patient.Birthday?.Year)</td>
                             <td>@patient.Gender</td>
                             <td style="text-align: center; width:10%;">
-                                <button type="button" class="btn btn-primary waves-effect selectCl">Seleccionar</button>
+                                <button type="button" class="btn bg-light-blue waves-effect selectCl">Seleccionar</button>
                             </td>
                         </tr>
                     }
@@ -59,7 +59,7 @@
             });
 
             $("#patients-table").DataTable({
-                "scrollY": "60vh",
+                "scrollY": "56vh",
                 "scrollCollapse": false,
                 "paging": false,
                 "language": {

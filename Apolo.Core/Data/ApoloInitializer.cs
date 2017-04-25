@@ -1,7 +1,9 @@
 ﻿using Apolo.Core.Model;
 using Apolo.Core.Model.Security;
+using Apolo.Core.Model.Treatment;
 using Apolo.Core.Util;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Apolo.Core.Data
@@ -10,6 +12,7 @@ namespace Apolo.Core.Data
     {
         protected override void Seed(ApoloContext context)
         {
+            #region Users
             context.Users.Add(GetAdminUser());
             context.Users.Add(GetTherapistUser());
             foreach(var patient in GetPatientUsers())
@@ -17,6 +20,15 @@ namespace Apolo.Core.Data
                 context.Users.Add(patient);
             }
             context.SaveChanges();
+            #endregion
+
+            #region Routines
+            foreach (var routine in GetRoutines(context))
+            {
+                context.Routines.Add(routine);
+            }
+            context.SaveChanges();
+            #endregion
         }
 
         private User GetAdminUser()
@@ -268,6 +280,111 @@ namespace Apolo.Core.Data
             #endregion
 
             return patients;
+        }
+
+        private List<Routine> GetRoutines(ApoloContext context)
+        {
+            List<Routine> routines = new List<Routine>();
+
+            #region Marcos
+            #region Routine 1
+            Routine routine = new Routine
+            {
+                StartDate = DateTime.Now.AddDays(-1),
+                DurationInWeeks = 4,
+                Patient = context.Users.SingleOrDefault( x => x.Username == "mdiaz"),
+                Therapist = context.Users.SingleOrDefault( x => x.Username == "fcaceres")
+            };
+
+            for(int i = 0; i < routine.DurationInWeeks * 7; i++)
+            {
+                WorkDay workDay = new WorkDay()
+                {
+                    Date = routine.StartDate.AddDays(i),
+                    Routine = routine
+                };
+
+                WorkUnit pongWorkUnit = new WorkUnit()
+                {
+                    WorkDay = workDay,
+                    DurationInMinutes = 5,
+                    Difficulty = Constants.Games.Difficulty.EASY
+                };
+
+                WorkUnit tetrisWorkUnit = new WorkUnit()
+                {
+                    WorkDay = workDay,
+                    DurationInMinutes = 4,
+                    Difficulty = Constants.Games.Difficulty.MEDIUM
+                };
+
+                WorkUnit invadersWorkUnit = new WorkUnit()
+                {
+                    WorkDay = workDay,
+                    DurationInMinutes = 3,
+                    Difficulty = Constants.Games.Difficulty.HARD
+                };
+                
+                workDay.WorkUnits.Add(pongWorkUnit);
+                workDay.WorkUnits.Add(tetrisWorkUnit);
+                workDay.WorkUnits.Add(invadersWorkUnit);
+
+                routine.WorkDays.Add(workDay);
+            }
+
+            routines.Add(routine);
+            #endregion
+
+            #region Routine 2
+            routine = new Routine
+            {
+                StartDate = DateTime.Now.AddDays(-35),
+                DurationInWeeks = 3,
+                Patient = context.Users.SingleOrDefault(x => x.Username == "mdiaz"),
+                Therapist = context.Users.SingleOrDefault(x => x.Username == "fcaceres")
+            };
+
+            for (int i = 0; i < routine.DurationInWeeks * 7; i++)
+            {
+                WorkDay workDay = new WorkDay()
+                {
+                    Date = routine.StartDate.AddDays(i),
+                    Routine = routine
+                };
+
+                WorkUnit pongWorkUnit = new WorkUnit()
+                {
+                    WorkDay = workDay,
+                    DurationInMinutes = 5,
+                    Difficulty = Constants.Games.Difficulty.HARD
+                };
+
+                WorkUnit tetrisWorkUnit = new WorkUnit()
+                {
+                    WorkDay = workDay,
+                    DurationInMinutes = 4,
+                    Difficulty = Constants.Games.Difficulty.HARD
+                };
+
+                WorkUnit invadersWorkUnit = new WorkUnit()
+                {
+                    WorkDay = workDay,
+                    DurationInMinutes = 3,
+                    Difficulty = Constants.Games.Difficulty.HARD
+                };
+
+                workDay.WorkUnits.Add(pongWorkUnit);
+                workDay.WorkUnits.Add(tetrisWorkUnit);
+                workDay.WorkUnits.Add(invadersWorkUnit);
+
+                routine.WorkDays.Add(workDay);
+            }
+
+            routines.Add(routine);
+            #endregion
+            #endregion
+
+            return routines;
         }
     }
 }

@@ -27,10 +27,20 @@
         {
         <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/Summary$", "active")">
             <a href="@Url.Action("Summary", "Patient", new { area = "Therapist" })">
-                <i class="material-icons">accessibility</i>
+                <i class="material-icons">recent_actors</i>
                 <span>Resumen</span>
             </a>
         </li>
+        }
+
+        @if (patient != null)
+        {
+            <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Routine$", "active")">
+                <a href="@Url.Action("Index", "Routine", new { area = "Therapist" })">
+                    <i class="material-icons">apps</i>
+                    <span>Rutinas</span>
+                </a>
+            </li>
         }
     </ul>
 </div>

@@ -1243,3 +1243,10 @@ $.format = $.validator.format;
 		}
 	});
 }(jQuery));
+
+// FCG Language Setup
+(function ($) {
+    $.extend($.validator.messages, {
+        required: "Este campo es requerido"
+    });
+}(jQuery));

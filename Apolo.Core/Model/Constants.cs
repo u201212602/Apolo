@@ -42,6 +42,13 @@ namespace Apolo.Core.Model
             public const string PONG = "Pong";
             public const string TETRIS = "Tetris";
             public const string INVADERS = "Invasores";
+
+            public static class Difficulty
+            {
+                public const string EASY = "Fácil";
+                public const string MEDIUM = "Medio";
+                public const string HARD = "Difícil";
+            }
         }
     }
 }
