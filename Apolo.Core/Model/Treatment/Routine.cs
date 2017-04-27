@@ -21,7 +21,7 @@ namespace Apolo.Core.Model.Treatment
         public int TherapistID { get; set; }
         public virtual User Therapist { get; set; }
 
-        public virtual ICollection<WorkDay> WorkDays { get; set; } = new List<WorkDay>();
+        public virtual ICollection<WorkWeek> WorkWeeks { get; set; } = new List<WorkWeek>();
 
 
         
@@ -29,8 +29,8 @@ namespace Apolo.Core.Model.Treatment
         {
             get
             {
-                foreach (var workDay in WorkDays)
-                    if (!workDay.IsFinished())
+                foreach (var workWeek in WorkWeeks)
+                    if (!workWeek.IsFinished)
                         return false;
 
                 return true;

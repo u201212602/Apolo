@@ -10,19 +10,21 @@ namespace Apolo.Core.Model.Treatment
 
 
 
-        public int RoutineID { get; set; }
-        public virtual Routine Routine { get; set; }
+        public int WorkWeekID { get; set; }
+        public virtual WorkWeek WorkWeek { get; set; }
 
         public virtual ICollection<WorkUnit> WorkUnits { get; set; } = new List<WorkUnit>();
 
-
-        public bool IsFinished()
+        public bool IsFinished
         {
-            foreach(var workUnit in WorkUnits)
-                if (!workUnit.IsFinished())
-                    return false;
+            get
+            {
+                foreach (var workUnit in WorkUnits)
+                    if (!workUnit.IsFinished)
+                        return false;
 
-            return true;
+                return true;
+            }
         }
     }
 }

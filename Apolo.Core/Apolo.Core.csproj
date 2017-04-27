@@ -58,6 +58,7 @@
     <Compile Include="Model\Treatment\Routine.cs" />
     <Compile Include="Model\Treatment\WorkUnit.cs" />
     <Compile Include="Model\Treatment\WorkDay.cs" />
+    <Compile Include="Model\Treatment\WorkWeek.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\SecurityUtil.cs" />
   </ItemGroup>

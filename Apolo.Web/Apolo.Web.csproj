@@ -316,6 +316,15 @@
   <ItemGroup>
     <Content Include="Areas\Therapist\Views\Routine\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Routine\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Patient\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Routine\Create.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -19,6 +19,12 @@ namespace Apolo.Web.Areas.Therapist.Controllers
         // GET: Therapist/Patient
         public ActionResult Index()
         {
+
+            return View();
+        }
+
+        public ActionResult List()
+        {
             OperationResult result = securityService.GetAllPatients();
 
             ViewBag.Patients = result.RequestedObject;

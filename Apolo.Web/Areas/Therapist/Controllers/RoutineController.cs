@@ -17,13 +17,18 @@ namespace Apolo.Web.Areas.Therapist.Controllers
         // GET: Therapist/Routine
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult List()
+        { 
             User sessionPatient = Session[Constants.SESSION_PATIENT] as User;
             OperationResult result = routineService.GetRoutinesForUsername(sessionPatient.Username);
             ViewBag.Routines = result.RequestedObject;
             return View();
         }
 
-        public ActionResult CreateStep1()
+        public ActionResult Create()
         {
             return View();
         }

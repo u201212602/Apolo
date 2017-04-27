@@ -8,11 +8,11 @@ namespace Apolo.Web.Util
 {
     public static class HttpUtil
     {
-        public static string OutputStringIfUrlMatches(HttpContext context, string pattern, string output)
+        public static string OutputStringIfUrlMatches(HttpContext context, string pattern, string output, string outputIfNotMatches = null)
         {
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
-            return regex.IsMatch(context.Request.Path) ? output : null;
+            return regex.IsMatch(context.Request.Path) ? output : outputIfNotMatches;
         }
     }
 }
