@@ -58,10 +58,20 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/form")
     <script>
         $(function () {
-            $("form").validate();
+            $("form").validate({
+                highlight: function (input) {
+                    $(input).parents('.form-line').addClass('error');
+                },
+                unhighlight: function (input) {
+                    $(input).parents('.form-line').removeClass('error');
+                },
+                errorPlacement: function (error, element) {
+                    $(element).parents('.input-group').append(error);
+                }
+            });
         });
     </script>
 }

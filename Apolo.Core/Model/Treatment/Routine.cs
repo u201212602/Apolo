@@ -12,7 +12,9 @@ namespace Apolo.Core.Model.Treatment
 
         public int DurationInWeeks { get; set; }
 
-        public string Purpose { get; set; }
+        public string Goal { get; set; }
+
+        public string Details { get; set; }
 
 
         public int PatientID { get; set; }

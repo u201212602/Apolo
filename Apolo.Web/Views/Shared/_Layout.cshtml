@@ -24,6 +24,23 @@
 
     <section class="content">
         <div class="container-fluid">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert bg-green alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert bg-red alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            <div class="block-header">
+                <h2>@(ViewBag.Title?.ToString()?.ToUpper())</h2>
+            </div>
             @RenderBody()
         </div>
     </section>

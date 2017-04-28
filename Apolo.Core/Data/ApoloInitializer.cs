@@ -5,6 +5,7 @@ using Apolo.Core.Util;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Apolo.Core.Model.Treatment.Blueprints;
 
 namespace Apolo.Core.Data
 {
@@ -26,6 +27,14 @@ namespace Apolo.Core.Data
             foreach (var routine in GetRoutines(context))
             {
                 context.Routines.Add(routine);
+            }
+            context.SaveChanges();
+            #endregion
+
+            #region Routine Blueprints
+            foreach(var routineBlueprint in GetRoutineBlueprints())
+            {
+                context.RoutineBlueprints.Add(routineBlueprint);
             }
             context.SaveChanges();
             #endregion
@@ -411,6 +420,66 @@ namespace Apolo.Core.Data
             #endregion
 
             return routines;
+        }
+
+        private List<RoutineBlueprint> GetRoutineBlueprints()
+        {
+            var routineBlueprints = new List<RoutineBlueprint>();
+
+            #region Routine Blueprint 1
+            var routineBlueprint = new RoutineBlueprint
+            {
+                Category = Constants.Routines.Categories.INTERMEDIATE,
+                DurationInWeeks = 6,
+                Name = "Rutina Intermedia 1",
+                Description = "Rutina para pacientes en etapas de recuperación intermedia"
+            };
+
+            for(int i = 0; i < routineBlueprint.DurationInWeeks; i++)
+            {
+                var workWeekBlueprint = new WorkWeekBlueprint
+                {
+                    DurationInDays = 5,
+                    Number = i,
+                    RoutineBlueprint = routineBlueprint
+                };
+
+                for(int k = 0; k < workWeekBlueprint.DurationInDays; k++)
+                {
+                    var workDayBlueprint = new WorkDayBlueprint
+                    {
+                        Number = k,
+                        WorkWeekBlueprint = workWeekBlueprint
+                    };
+
+                    var workUnitBlueprint1 = new WorkUnitBlueprint
+                    {
+                        Game = Constants.Games.TETRIS,
+                        Difficulty = Constants.Games.Difficulty.MEDIUM,
+                        DurationInMinutes = 5,
+                        WorkDayBlueprint = workDayBlueprint
+                    };
+
+                    var workUnitBlueprint2 = new WorkUnitBlueprint
+                    {
+                        Game = Constants.Games.PONG,
+                        Difficulty = Constants.Games.Difficulty.HARD,
+                        DurationInMinutes = 2,
+                        WorkDayBlueprint = workDayBlueprint
+                    };
+
+                    workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint1);
+                    workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint2);
+
+                    workWeekBlueprint.WorkDays.Add(workDayBlueprint);
+                }
+
+                routineBlueprint.WorkWeekBlueprints.Add(workWeekBlueprint);
+            }
+            routineBlueprints.Add(routineBlueprint);
+            #endregion
+
+            return routineBlueprints;
         }
     }
 }

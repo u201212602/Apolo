@@ -18,6 +18,16 @@ namespace Apolo.Core.Model
             public const string PATIENT = "Paciente";
         }
 
+        public static class Operation
+        {
+            public const string BLUEPRINT_ID = "BLUEPRINT_ID";
+            public const string START_DATE = "START_DATE";
+            public const string THERAPIST_ID = "THERAPIST_ID";
+            public const string PATIENT_ID = "PATIENT_ID";
+            public const string GOAL = "GOAL";
+            public const string DETAILS = "DETAILS";
+        }
+
         public static class Areas
         {
             public const string ADMINISTRATOR = "Administrator";
@@ -48,6 +58,16 @@ namespace Apolo.Core.Model
                 public const string EASY = "Fácil";
                 public const string MEDIUM = "Medio";
                 public const string HARD = "Difícil";
+            }
+        }
+
+        public static class Routines
+        {
+            public static class Categories
+            {
+                public const string BASIC = "Básico";
+                public const string INTERMEDIATE = "Intermedio";
+                public const string ADVANCED = "Avanzado";
             }
         }
     }

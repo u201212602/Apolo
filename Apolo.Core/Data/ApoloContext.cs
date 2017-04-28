@@ -1,5 +1,6 @@
 ﻿using Apolo.Core.Model.Security;
 using Apolo.Core.Model.Treatment;
+using Apolo.Core.Model.Treatment.Blueprints;
 using System.Data.Entity;
 
 namespace Apolo.Core.Data
@@ -28,5 +29,6 @@ namespace Apolo.Core.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Routine> Routines { get; set; }
+        public DbSet<RoutineBlueprint> RoutineBlueprints {get;set;}
     }
 }

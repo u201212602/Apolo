@@ -1,21 +1,15 @@
 ﻿
-@{
-    ViewBag.Title = "Resumen";
-}
-
 @using Apolo.Core.Model
 @using Apolo.Core.Model.Security
+
 @{
     User patient = Session[Constants.SESSION_PATIENT] as User;
+    ViewBag.Title = "Resumen";
 }
 
 @section Styles {
     @Styles.Render("~/Assets/plugins/morris/css/morris.css")
 }
-
-<div class="block-header">
-    <h2>@(ViewBag.Title?.ToString()?.ToUpper())</h2>
-</div>
 
 <div class="row clearfix">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">

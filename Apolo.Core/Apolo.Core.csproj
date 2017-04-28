@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Common\OperationRequest.cs" />
     <Compile Include="Business\Common\OperationResult.cs" />
     <Compile Include="Business\RoutineService.cs" />
     <Compile Include="Business\SecurityService.cs" />
@@ -56,9 +57,13 @@
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\Security\User.cs" />
     <Compile Include="Model\Treatment\Routine.cs" />
+    <Compile Include="Model\Treatment\Blueprints\RoutineBlueprint.cs" />
+    <Compile Include="Model\Treatment\Blueprints\WorkDayBlueprint.cs" />
     <Compile Include="Model\Treatment\WorkUnit.cs" />
     <Compile Include="Model\Treatment\WorkDay.cs" />
+    <Compile Include="Model\Treatment\Blueprints\WorkUnitBlueprint.cs" />
     <Compile Include="Model\Treatment\WorkWeek.cs" />
+    <Compile Include="Model\Treatment\Blueprints\WorkWeekBlueprint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\SecurityUtil.cs" />
   </ItemGroup>

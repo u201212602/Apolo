@@ -213,18 +213,96 @@
     <Content Include="Assets\js\demo.js" />
     <Content Include="Assets\js\helper.js" />
     <Content Include="Assets\plugins\animate\css\animate.css" />
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\css\bootstrap-material-datetimepicker.css" />
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.svg" />
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\js\bootstrap-material-datetimepicker.js" />
+    <Content Include="Assets\plugins\bootstrap-select\css\bootstrap-select.css" />
+    <Content Include="Assets\plugins\bootstrap-select\css\bootstrap-select.min.css" />
+    <Content Include="Assets\plugins\bootstrap-select\js\bootstrap-select.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\bootstrap-select.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ar_AR.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ar_AR.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-bg_BG.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-bg_BG.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-cro_CRO.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-cro_CRO.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-cs_CZ.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-cs_CZ.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-da_DK.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-da_DK.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-de_DE.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-de_DE.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-en_US.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-en_US.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-es_CL.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-es_CL.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-es_ES.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-es_ES.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-eu.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-eu.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-fa_IR.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-fa_IR.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-fi_FI.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-fi_FI.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-fr_FR.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-fr_FR.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-hu_HU.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-hu_HU.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-id_ID.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-id_ID.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-it_IT.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-it_IT.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ko_KR.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ko_KR.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-lt_LT.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-lt_LT.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-nb_NO.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-nb_NO.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-nl_NL.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-nl_NL.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-pl_PL.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-pl_PL.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-pt_BR.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-pt_BR.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-pt_PT.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-pt_PT.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ro_RO.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ro_RO.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ru_RU.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ru_RU.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-sk_SK.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-sk_SK.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-sl_SI.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-sv_SE.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-tr_TR.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-tr_TR.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ua_UA.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-ua_UA.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-zh_CN.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-zh_CN.min.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-zh_TW.js" />
+    <Content Include="Assets\plugins\bootstrap-select\js\i18n\defaults-zh_TW.min.js" />
     <Content Include="Assets\plugins\bootstrap\css\bootstrap.css" />
     <Content Include="Assets\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\plugins\bootstrap\js\bootstrap.js" />
     <Content Include="Assets\plugins\datatables\css\datatables.min.css" />
     <Content Include="Assets\plugins\datatables\js\datatables.min.js" />
+    <Content Include="Assets\plugins\jquery-steps\js\jquery.steps.min.js" />
+    <Content Include="Assets\plugins\jquery-validate\js\jquery.validate.js" />
+    <Content Include="Assets\plugins\jquery-validate\js\messages_es.js" />
     <Content Include="Assets\plugins\jquery\jquery-1.10.2.js" />
     <Content Include="Assets\plugins\jquery\jquery.validate.js" />
+    <Content Include="Assets\plugins\moment\js\moment.min.js" />
     <Content Include="Assets\plugins\morris\css\morris.css" />
     <Content Include="Assets\plugins\morris\js\morris.js" />
     <Content Include="Assets\plugins\node-waves\css\waves.css" />
     <Content Include="Assets\plugins\node-waves\js\waves.js" />
     <Content Include="Assets\plugins\raphael\js\raphael.min.js" />
+    <Content Include="Assets\plugins\jquery-slimscroll\js\jquery.slimscroll.min.js" />
+    <Content Include="Assets\plugins\sweetalert\css\sweetalert.css" />
+    <Content Include="Assets\plugins\sweetalert\js\sweetalert.min.js" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -324,6 +402,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Therapist\Views\Routine\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\plugins\bootstrap-select\css\bootstrap-select.css.map" />
+    <Content Include="Assets\plugins\bootstrap-select\js\bootstrap-select.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.eot" />
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.ttf" />
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.woff" />
+    <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.woff2" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
