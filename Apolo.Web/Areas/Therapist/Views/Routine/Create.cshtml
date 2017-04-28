@@ -24,77 +24,81 @@
 
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card" style="height: 80vh;">
-            <div class="body" style="height: 100%;">
-                <form id="wizard_with_validation" method="POST" class="routineFormCl" style="height: 100%;">
+        <div class="card">
+            <div class="body">
+                <form method="POST" id="routineCreationForm" style="height: 100%;">
                     <input type="hidden" name="patientID" value="@patient.ID"/>
                     <input type="hidden" name="therapistID" value="@therapist.ID" />
-                    <h3>Información General de la Rutina</h3>
-                    <section>
-                        <div class="row clearfix">
-                            <div class="col-sm-6">
-                                <label class="form-label">Objetivo</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control objectiveCl" name="goal" required autofocus placeholder="Ingrese el objetivo de la rutina">
-                                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <label class="form-label">Objetivo</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" class="form-control objectiveCl" name="goal" required autofocus placeholder="Ingrese el objetivo de la rutina">
                                 </div>
                             </div>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-sm-6">
-                                <label class="form-label">Detalles</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <textarea rows="4" class="form-control no-resize detailsCl" name="details" placeholder="Ingrese detalles adicionales de la rutina"></textarea>
-                                    </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <label class="form-label">Detalles</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <textarea rows="4" class="form-control no-resize detailsCl" name="details" placeholder="Ingrese detalles adicionales de la rutina"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-sm-6">
-                                <label class="form-label">Fecha de Inicio</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control datepicker startDateCl" name="startDate" required placeholder="Seleccione la fecha de inicio">
-                                    </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <label class="form-label">Fecha de Inicio</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" class="form-control datepicker startDateCl" name="startDate" required placeholder="Seleccione la fecha de inicio">
                                 </div>
                             </div>
                         </div>
-                    </section>
-
-                    <h3>Seleccionar Modelo de Rutina</h3>
-                    <section>
-
-                        <div class="dataTables_wrapper">
-                            <table id="routines-table" class="table table-hover table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nombre</th>
-                                        <th>Categoría</th>
-                                        <th>Duración (Semanas)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var routineBlueprint in (List<RoutineBlueprint>)ViewBag.RoutineBlueprints)
-                                    {
-                                        <tr>
-                                            <td style="vertical-align:middle;">@routineBlueprint.ID</td>
-                                            <td style="vertical-align:middle;">@routineBlueprint.Name</td>
-                                            <td style="vertical-align:middle;">@routineBlueprint.Category</td>
-                                            <td style="vertical-align:middle;">@routineBlueprint.DurationInWeeks</td>
-                                            <td style="vertical-align:middle;">
-                                                <input name="routineBlueprintID" id="routineBlueprintID-@routineBlueprint.ID" type="radio" class="radio-col-light-blue" value="@routineBlueprint.ID"/>
-                                                <label for="routineBlueprintID-@routineBlueprint.ID"></label>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <label class="form-label">Modelo de Rutina</label>
+                            <div class="form-group">
+                                <div class="dataTables_wrapper">
+                                    <table id="routineBlueprintTable" class="table table-hover table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Categoría</th>
+                                                <th>Duración (Semanas)</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var routineBlueprint in (List<RoutineBlueprint>)ViewBag.RoutineBlueprints)
+                                            {
+                                                <tr>
+                                                    <td style="vertical-align:middle;">@routineBlueprint.ID</td>
+                                                    <td style="vertical-align:middle;">@routineBlueprint.Name</td>
+                                                    <td style="vertical-align:middle;">@routineBlueprint.Category</td>
+                                                    <td style="vertical-align:middle;">@routineBlueprint.DurationInWeeks</td>
+                                                    <td style="vertical-align:middle;">
+                                                        <input name="routineBlueprintID" type="checkbox" id="routineBlueprintID-@routineBlueprint.ID" class="filled-in chk-col-light-blue checkboxCl" value="@routineBlueprint.ID">
+                                                        <label for="routineBlueprintID-@routineBlueprint.ID"></label>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                    </section>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <button type="submit" style="float: right;" class="btn btn-primary m-t-15 waves-effect">Crear Rutina</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -109,94 +113,14 @@
 
     <script>
         $(function () {
-            //Advanced form with validation
-            var form = $('#wizard_with_validation').show();
-
-            form.steps({
-                headerTag: 'h3',
-                bodyTag: 'section',
-                transitionEffect: 'slide',
-                onInit: function (event, currentIndex) {
-                    $("#wizard_with_validation").submit(function () {
-                    });
-
-                    $("#routines-table").DataTable({
-                        "scrollY": "56vh",
-                        "scrollCollapse": false,
-                        "paging": false,
-                        "language": {
-                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                        },
-                        "columnDefs": [
-                            {
-                                "targets": [4],
-                                "orderable": false
-                            }
-                        ]
-                    });
-
-                    $.AdminBSB.input.activate();
-
-                    //Set tab width
-                    var $tab = $(event.currentTarget).find('ul[role="tablist"] li');
-                    var tabCount = $tab.length;
-                    $tab.css('width', (100 / tabCount) + '%');
-
-                    //set button waves effect
-                    setButtonWavesEffect(event);
-                    
-                    $(".datepicker").bootstrapMaterialDatePicker({
-                        clearText: 'Borrar',
-                        nowText: 'Hoy',
-                        cancelText: 'Cancelar',
-                        format: 'DD/MM/YYYY',
-                        lang: 'es',
-                        minDate: moment(),
-                        clearButton: true,
-                        weekStart: 1,
-                        time: false
-                    });
-
-                    $(".startDateCl").val(moment().format("DD/MM/YYYY"));
-                },
-                onStepChanging: function (event, currentIndex, newIndex) {
-                    if (currentIndex > newIndex) { return true; }
-
-                    if (currentIndex < newIndex) {
-                        form.find('.body:eq(' + newIndex + ') label.error').remove();
-                        form.find('.body:eq(' + newIndex + ') .error').removeClass('error');
-                    }
-
-                    form.validate().settings.ignore = ':disabled,:hidden';
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex) {
-                    setButtonWavesEffect(event);
-                },
-                onFinishing: function (event, currentIndex) {
-                    if (!$("input[name='routineBlueprintID']:checked").val()) {
-                        swal(
-                            'Error',
-                            'Seleccione un modelo de rutina',
-                            'error'
-                        );
-                        return false;
-                    }
-
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex) {
-                    form.submit();
-                },
-                labels: {
-                    cancel: "Cancelar",
-                    current: "paso actual:",
-                    finish: "Crear",
-                    next: "Siguiente",
-                    previous: "Anterior",
-                    loading: "Cargando..."
+            $(".checkboxCl").change(function () {
+                if (this.checked) {
+                    $(".checkboxCl").not(this).prop("checked", false);
                 }
             });
+
+            //Advanced form with validation
+            var form = $('#routineCreationForm');
 
             form.validate({
                 highlight: function (input) {
@@ -207,18 +131,50 @@
                 },
                 errorPlacement: function (error, element) {
                     $(element).parents('.form-group').append(error);
-                },
-                rules: {
-                    'confirm': {
-                        equalTo: '#password'
-                    }
                 }
             });
-        });
 
-        function setButtonWavesEffect(event) {
-            $(event.currentTarget).find('[role="menu"] li a').removeClass('waves-effect');
-            $(event.currentTarget).find('[role="menu"] li:not(.disabled) a').addClass('waves-effect');
-        }
+            form.submit(function () {
+                if (!$("input[name='routineBlueprintID']:checked").val()) {
+                    swal(
+                        'Error',
+                        'Seleccione un modelo de rutina',
+                        'error'
+                    );
+                    return false;
+                }
+
+                return form.valid();
+            });
+
+            $("#routineBlueprintTable").DataTable({
+                "scrollY": "56vh",
+                "scrollCollapse": true,
+                "paging": false,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [4],
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $(".datepicker").bootstrapMaterialDatePicker({
+                clearText: 'Borrar',
+                nowText: 'Hoy',
+                cancelText: 'Cancelar',
+                format: 'DD/MM/YYYY',
+                lang: 'es',
+                minDate: moment(),
+                clearButton: true,
+                weekStart: 1,
+                time: false
+            });
+
+            $(".startDateCl").val(moment().format("DD/MM/YYYY"));
+        });
     </script>
 }

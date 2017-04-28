@@ -478,6 +478,58 @@ namespace Apolo.Core.Data
             }
             routineBlueprints.Add(routineBlueprint);
             #endregion
+            #region Routine Blueprint 2
+            routineBlueprint = new RoutineBlueprint
+            {
+                Category = Constants.Routines.Categories.BASIC,
+                DurationInWeeks = 6,
+                Name = "Rutina de Incepción 1",
+                Description = "Rutina básica para pacientes en las etapas iniciales de recuperación"
+            };
+
+            for (int i = 0; i < routineBlueprint.DurationInWeeks; i++)
+            {
+                var workWeekBlueprint = new WorkWeekBlueprint
+                {
+                    DurationInDays = 3,
+                    Number = i,
+                    RoutineBlueprint = routineBlueprint
+                };
+
+                for (int k = 0; k < workWeekBlueprint.DurationInDays; k++)
+                {
+                    var workDayBlueprint = new WorkDayBlueprint
+                    {
+                        Number = k,
+                        WorkWeekBlueprint = workWeekBlueprint
+                    };
+
+                    var workUnitBlueprint1 = new WorkUnitBlueprint
+                    {
+                        Game = Constants.Games.TETRIS,
+                        Difficulty = Constants.Games.Difficulty.EASY,
+                        DurationInMinutes = 3,
+                        WorkDayBlueprint = workDayBlueprint
+                    };
+
+                    var workUnitBlueprint2 = new WorkUnitBlueprint
+                    {
+                        Game = Constants.Games.PONG,
+                        Difficulty = Constants.Games.Difficulty.EASY,
+                        DurationInMinutes = 3,
+                        WorkDayBlueprint = workDayBlueprint
+                    };
+
+                    workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint1);
+                    workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint2);
+
+                    workWeekBlueprint.WorkDays.Add(workDayBlueprint);
+                }
+
+                routineBlueprint.WorkWeekBlueprints.Add(workWeekBlueprint);
+            }
+            routineBlueprints.Add(routineBlueprint);
+            #endregion
 
             return routineBlueprints;
         }

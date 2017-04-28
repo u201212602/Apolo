@@ -293,7 +293,6 @@
     <Content Include="Assets\plugins\jquery-validate\js\jquery.validate.js" />
     <Content Include="Assets\plugins\jquery-validate\js\messages_es.js" />
     <Content Include="Assets\plugins\jquery\jquery-1.10.2.js" />
-    <Content Include="Assets\plugins\jquery\jquery.validate.js" />
     <Content Include="Assets\plugins\moment\js\moment.min.js" />
     <Content Include="Assets\plugins\morris\css\morris.css" />
     <Content Include="Assets\plugins\morris\js\morris.js" />

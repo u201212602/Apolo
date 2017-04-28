@@ -10373,7 +10373,7 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-    background-color: #80d8ff;
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDA5MWVhIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQwYzRmZiIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwYjBmZiIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
     padding-left: 0;
     max-width: 360px;
     margin: 5% auto;
@@ -10397,7 +10397,7 @@ fieldset[disabled] .form-control {
     }
 
         .login-page .login-box .logo a {
-            font-size: 36px;
+            font-size: 40px;
             display: block;
             width: 100%;
             text-align: center;
@@ -10405,6 +10405,7 @@ fieldset[disabled] .form-control {
         }
 
         .login-page .login-box .logo small {
+            font-size: 20px;
             display: block;
             width: 100%;
             text-align: center;
