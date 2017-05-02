@@ -1,0 +1,59 @@
+﻿@using Apolo.Core.Model.Security
+@using Apolo.Core.Model.Treatment
+@using Apolo.Core.Model
+@{
+    ViewBag.Title = "Inicio";
+    User patient = Session[Constants.SESSION_USER] as User;
+    List<WorkUnit> workUnits = null;
+    if(ViewBag.WorkDayForToday != null )
+    {
+        workUnits = ((WorkDay)ViewBag.WorkDayForToday).WorkUnits.ToList();
+    }
+}
+
+<div class="row" style="left: 20%; top: 10%; width: 60%; height: 80%;
+                box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.2); position: absolute; background-color: ghostwhite;">
+    <div style="margin: 30px 30px 30px 30px;">
+        @if (workUnits == null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="welcome" style="font-family: 'RobotoBold', sans-serif;">
+                        Hola, @patient.FirstName! <small style="font-family: 'RobotoThin', sans-serif;">No tienes juegos programados para hoy!</small>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="welcome" style="font-family: 'RobotoBold', sans-serif;">
+                        Hola, @patient.FirstName! <small style="font-family: 'RobotoThin', sans-serif;">Para hoy tienes los siguientes juegos:</small>
+                    </div>
+                </div>
+            </div>
+
+            <div style="top: 5%; left: 5%;">
+                @if (workUnits.Count == 1)
+                {
+                    @Html.Partial("_OneUnit");
+                }
+                @if (workUnits.Count == 2)
+                {
+                    @Html.Partial("_TwoUnits");
+                }
+                @if (workUnits.Count == 3)
+                {
+                    @Html.Partial("_ThreeUnits");
+                }
+                @if (workUnits.Count == 4)
+                {
+                    @Html.Partial("_FourUnits");
+                }
+            </div>
+        }
+    </div>
+
+    <a href="@Url.Action("LogOff", "Account", new { area = "" })" class="waves-effect waves-light btn red" style="position: absolute; bottom: 3%; left: 2%"><i class="material-icons left">input</i>Salir</a>
+</div>

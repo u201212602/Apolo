@@ -4,6 +4,7 @@ using Apolo.Core.Model;
 using Apolo.Core.Model.Treatment;
 using Apolo.Core.Model.Treatment.Blueprints;
 using System;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Apolo.Core.Business
@@ -12,9 +13,42 @@ namespace Apolo.Core.Business
     {
         ApoloContext context = new ApoloContext();
 
+        public OperationResult GetWorkUnitById(int workUnitId)
+        {
+            return new OperationResult { RequestedObject = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId) };
+        }
+
+        public OperationResult CompleteWorkUnitById(int workUnitId)
+        {
+            var workUnit = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId);
+
+            if(workUnit != null)
+            {
+                workUnit.IsFinished = true;
+                context.SaveChanges();
+            }
+
+            return new OperationResult();
+        }
         public OperationResult GetRoutinesForUsername(string username)
         {
             return new OperationResult { RequestedObject = context.Routines.Where( x => x.Patient.Username == username ).ToList() };
+        }
+
+        public OperationResult GetWorkDayForToday(string username)
+        {
+            WorkDay workDayForToday;
+            try
+            {
+                workDayForToday = context.WorkDays.Where(x => DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(DateTime.Now)
+                                    && x.WorkWeek.Routine.Patient.Username == username).ToList().First();
+            }
+            catch
+            {
+                workDayForToday = null;
+            }
+
+            return new OperationResult { RequestedObject = workDayForToday };
         }
 
         public OperationResult GetAllRoutineBlueprints()

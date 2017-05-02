@@ -10,9 +10,9 @@
 
         public int DurationInMinutes { get; set; }
 
-        public int MinutesPlayed { get; set; } = 0;
-
         public int FinalScore { get; set; }
+    
+        public bool IsFinished { get; set; }
 
 
 
@@ -20,13 +20,5 @@
         public virtual WorkDay WorkDay { get; set; }
 
         
-
-        public bool IsFinished
-        {
-            get
-            {
-                return MinutesPlayed >= DurationInMinutes;
-            }
-        }
     }
 }

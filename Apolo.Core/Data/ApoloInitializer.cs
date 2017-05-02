@@ -326,7 +326,8 @@ namespace Apolo.Core.Data
                     WorkUnit pongWorkUnit = new WorkUnit()
                     {
                         WorkDay = workDay,
-                        DurationInMinutes = 5,
+                        DurationInMinutes = 1,
+                        Game = Constants.Games.INVADERS,
                         Difficulty = Constants.Games.Difficulty.EASY
                     };
 
@@ -334,6 +335,7 @@ namespace Apolo.Core.Data
                     {
                         WorkDay = workDay,
                         DurationInMinutes = 4,
+                        Game = Constants.Games.TETRIS,
                         Difficulty = Constants.Games.Difficulty.MEDIUM
                     };
 
@@ -341,6 +343,7 @@ namespace Apolo.Core.Data
                     {
                         WorkDay = workDay,
                         DurationInMinutes = 3,
+                        Game = Constants.Games.PONG,
                         Difficulty = Constants.Games.Difficulty.HARD
                     };
 
@@ -520,8 +523,17 @@ namespace Apolo.Core.Data
                         WorkDayBlueprint = workDayBlueprint
                     };
 
+                    var workUnitBlueprint3 = new WorkUnitBlueprint
+                    {
+                        Game = Constants.Games.INVADERS,
+                        Difficulty = Constants.Games.Difficulty.EASY,
+                        DurationInMinutes = 1,
+                        WorkDayBlueprint = workDayBlueprint
+                    };
+
                     workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint1);
                     workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint2);
+                    workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint3);
 
                     workWeekBlueprint.WorkDays.Add(workDayBlueprint);
                 }

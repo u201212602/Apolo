@@ -1,0 +1,84 @@
+﻿@using Apolo.Core.Model.Treatment
+@{
+    ViewBag.Title = "PlayWorkUnit";
+    var workUnit = ViewBag.WorkUnit as WorkUnit;
+}
+
+<canvas id='game' width="1250" height="800" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -57%); background-color: black;"></canvas>
+
+<div id="clock">
+
+</div>
+
+<div id="completion-message" style="display: none;">
+    Completado!&nbsp;&nbsp;&nbsp;<a href="@Url.Action("Index", "Home", new { @area = "Patient" })" class="waves-effect waves-light btn"><i class="material-icons left">done</i>Regresar</a>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        function getUnitDurationInMinutes() {
+            return new Date(new Date().valueOf() + @workUnit.DurationInMinutes * 60 * 1000);
+        }
+
+        var $clock = $('#clock');
+
+        $clock.countdown(getUnitDurationInMinutes(), function (event) {
+            $(this).html(event.strftime('%M:%S'));
+        })
+        .on("finish.countdown", function () {
+            $.post('@Url.Action("CompleteWorkUnit", "Home", new { @area = "Patient", workUnitId = workUnit.ID })', function () {
+                $("#clock").hide();
+                $("#completion-message").show();
+            });
+        });
+
+        //$clock.countdown('pause');
+    </script>
+    @Scripts.Render("~/Assets/plugins/myo/js/myo.js")
+    @Scripts.Render("~/Assets/games/invaders/engine.js")
+    @Scripts.Render("~/Assets/games/invaders/game.js")
+    <script>
+        var myMyo;
+
+        Myo.on('connected', function () {
+            myMyo = this;
+            Myo.setLockingPolicy("none");
+            myMyo.unlock();
+            addEvents(myMyo);
+        });
+
+        Myo.connect();
+
+        var tempHelper = 0;
+
+        var addEvents = function (myo) {
+            myo.on("imu",
+                function (data) {
+                    if (!PLAYER) return;
+                    if (tempHelper >= 10000) {
+                        tempHelper = 0;
+                        return;
+                    }
+                    tempHelper++;
+                    console.log("gyro.x = " + data.gyroscope.y * 0.99);
+                    console.log("player.x = " + PLAYER.x);
+                    var dx = Math.floor(data.gyroscope.y * 0.6);
+                    if (PLAYER.x + dx < 0 || PLAYER.x + dx + PLAYER.w > GAME.width) return;
+                    PLAYER.x += dx;
+                });
+            myo.on('pose',
+                function (name) {
+                    if (!GAME && name == "double_tap") {
+                        // Create a new jQuery.Event object with specified event properties.
+                        var e = jQuery.Event("keydown", { keyCode: 32 });
+
+                        // trigger an artificial keydown event with keyCode 64
+                        jQuery("html").trigger(e);
+                    }
+                    if (GAME && (name == "fist" || name == "fingers_spread" || name == "double_tap")) {
+                        GAME.keys['fire'] = true;
+                    }
+                });
+        }
+    </script>
+}

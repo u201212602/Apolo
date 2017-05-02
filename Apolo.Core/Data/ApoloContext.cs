@@ -29,6 +29,9 @@ namespace Apolo.Core.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Routine> Routines { get; set; }
-        public DbSet<RoutineBlueprint> RoutineBlueprints {get;set;}
+        public DbSet<RoutineBlueprint> RoutineBlueprints { get; set; }
+        public DbSet<WorkDay> WorkDays { get; set; }
+
+        public System.Data.Entity.DbSet<Apolo.Core.Model.Treatment.WorkUnit> WorkUnits { get; set; }
     }
 }

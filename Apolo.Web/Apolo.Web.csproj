@@ -188,6 +188,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Patient\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Patient\PatientAreaRegistration.cs" />
     <Compile Include="Areas\Therapist\Controllers\HomeController.cs" />
     <Compile Include="Areas\Therapist\Controllers\PatientController.cs" />
     <Compile Include="Areas\Therapist\Controllers\RoutineController.cs" />
@@ -204,14 +206,24 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\games\invaders\base.css" />
+    <Content Include="Assets\games\invaders\engine.js" />
+    <Content Include="Assets\games\invaders\game.js" />
+    <Content Include="Assets\games\invaders\GPL-LICENSE.txt" />
+    <Content Include="Assets\games\invaders\images\sprites.png" />
+    <Content Include="Assets\games\invaders\MIT-LICENSE.txt" />
     <Content Include="Assets\css\materialize.css" />
+    <Content Include="Assets\css\real-materialize.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\themes.css" />
-    <Content Include="Assets\img\user-img-background.jpg" />
-    <Content Include="Assets\img\user.png" />
+    <Content Include="Assets\img\defaultGameAvatar.png" />
+    <Content Include="Assets\img\invaders.png" />
+    <Content Include="Assets\img\pong.png" />
+    <Content Include="Assets\img\tetris.png" />
     <Content Include="Assets\js\admin.js" />
     <Content Include="Assets\js\demo.js" />
     <Content Include="Assets\js\helper.js" />
+    <Content Include="Assets\js\real-materialize.js" />
     <Content Include="Assets\plugins\animate\css\animate.css" />
     <Content Include="Assets\plugins\bootstrap-material-datepicker\css\bootstrap-material-datetimepicker.css" />
     <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.svg" />
@@ -289,6 +301,7 @@
     <Content Include="Assets\plugins\bootstrap\js\bootstrap.js" />
     <Content Include="Assets\plugins\datatables\css\datatables.min.css" />
     <Content Include="Assets\plugins\datatables\js\datatables.min.js" />
+    <Content Include="Assets\plugins\jquery-countdown\js\jquery.countdown.js" />
     <Content Include="Assets\plugins\jquery-steps\js\jquery.steps.min.js" />
     <Content Include="Assets\plugins\jquery-validate\js\jquery.validate.js" />
     <Content Include="Assets\plugins\jquery-validate\js\messages_es.js" />
@@ -296,6 +309,7 @@
     <Content Include="Assets\plugins\moment\js\moment.min.js" />
     <Content Include="Assets\plugins\morris\css\morris.css" />
     <Content Include="Assets\plugins\morris\js\morris.js" />
+    <Content Include="Assets\plugins\myo\js\myo.js" />
     <Content Include="Assets\plugins\node-waves\css\waves.css" />
     <Content Include="Assets\plugins\node-waves\js\waves.js" />
     <Content Include="Assets\plugins\raphael\js\raphael.min.js" />
@@ -324,6 +338,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrator\Models\" />
+    <Folder Include="Areas\Patient\Models\" />
     <Folder Include="Areas\Therapist\Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -411,6 +426,57 @@
     <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.ttf" />
     <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.woff" />
     <Content Include="Assets\plugins\bootstrap-material-datepicker\font\Material-Design-Icons.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="Assets\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="Assets\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="Assets\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="Assets\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="Assets\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="Assets\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="Assets\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="Assets\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="Assets\fonts\roboto\Roboto-Thin.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\_OneUnit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\_TwoUnits.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\_ThreeUnits.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\_FourUnits.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\_WorkUnitCard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\PlayWorkUnit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\Invaders.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\Pong.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Home\Tetris.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

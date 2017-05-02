@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Apolo</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    @Styles.Render("~/Assets/plugins/bootstrap/css/bootstrap.css")
+    @Styles.Render("~/Assets/css/real-materialize.css")
+    @RenderSection("Styles", false)
+    <style>
+        .body-patient {
+            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDA5MWVhIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQwYzRmZiIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwYjBmZiIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
+        }
+        .patient-board {
+            position: absolute;
+            left: 5%;
+            top: 6%;
+            width: 90%;
+            height: 88%;
+            background-color: white;
+        }
+        .welcome {
+            margin: 30px 30px 30px 30px;
+            font-size: 40px;
+            display: block;
+            color: #616161;
+        }
+        .welcome small {
+            font-size: 30px;
+            color: #616161;
+        }
+    </style>
+</head>
+<body class="body-patient">
+
+
+    <section class="content">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </section>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Assets/js/real-materialize.js")
+    @Scripts.Render("~/Assets/plugins/jquery-countdown/js/jquery.countdown.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
