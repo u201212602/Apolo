@@ -76,6 +76,11 @@
                         jQuery("html").trigger(e);
                     }
                     if (GAME && (name == "fist" || name == "fingers_spread" || name == "double_tap")) {
+                        // Create a new jQuery.Event object with specified event properties.
+                        var e = jQuery.Event("keydown", { keyCode: 32 });
+
+                        // trigger an artificial keydown event with keyCode 64
+                        jQuery("html").trigger(e);
                         GAME.keys['fire'] = true;
                     }
                 });

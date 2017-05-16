@@ -56,6 +56,11 @@ namespace Apolo.Core.Business
             return new OperationResult { RequestedObject = context.RoutineBlueprints.ToList() };
         }
 
+        public OperationResult GetRoutineBlueprintById(int id)
+        {
+            return new OperationResult { RequestedObject = context.RoutineBlueprints.SingleOrDefault( x => x.ID == id) };
+        }
+
         public OperationResult MakeRoutineFromBlueprint(OperationRequest operationRequest)
         {
             var operationResult = new OperationResult();

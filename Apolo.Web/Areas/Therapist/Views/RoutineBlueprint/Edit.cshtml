@@ -1,0 +1,128 @@
+﻿@using Apolo.Core.Model.Treatment.Blueprints
+@using Apolo.Core.Model
+@using Apolo.Core.Util
+@{
+    RoutineBlueprint routineBlueprint = Session[Constants.SESSION_ROUTINEBLUEPRINT] as RoutineBlueprint;
+    ViewBag.Title = "Editar Plantilla de Rutina #" + routineBlueprint.ID;
+}
+
+<div class="card">
+    <div class="header">
+        <h2>Datos</h2>
+    </div>
+    <div class="body" style="padding-bottom: 0;">
+        <div class="row">
+            <div class="col-md-6" style="margin-bottom: 0;">
+                <label for="nombre">Nombre</label>
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="text" id="name" class="form-control" readonly="readonly" value="@routineBlueprint.Name">
+                    </div>
+                </div>
+                <label for="duration">Duración</label>
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="text" id="duration" class="form-control" readonly="readonly" value="@routineBlueprint.DurationInWeeks semanas">
+                    </div>
+                </div>
+                <label for="category">Categoría</label>
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="text" id="category" class="form-control" readonly="readonly" value="@routineBlueprint.Category">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-bottom: 0;">
+                <label for="description">Descripción</label>
+                <div class="form-group">
+                    <div class="form-line">
+                        <textarea class="form-control" id="description" readonly="readonly" rows="6">@routineBlueprint.Description</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="header">
+        <h2>Trabajo por Semanas</h2>
+    </div>
+    <div class="body" style="padding-bottom: 0;">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 0;">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    @foreach (WorkWeekBlueprint workWeek in routineBlueprint.WorkWeekBlueprints)
+                    {
+                        <div class="panel panel-primary">
+                            <div class="panel-heading panel-primary" role="tab" id="headingWeek_@workWeek.Number">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" href="#collapseWeek_@workWeek.Number" aria-expanded="true" aria-controls="collapseWeek_@workWeek.Number">
+                                        Semana @(workWeek.Number + 1)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseWeek_@workWeek.Number" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingWeek_@workWeek.Number">
+                                <div class="panel-body">
+                                    @foreach (WorkDayBlueprint workDay in workWeek.WorkDays)
+                                    {
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading panel-primary" role="tab" id="headingDay_@workDay.ID">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" href="#collapseDay_@workDay.ID" aria-expanded="true" aria-controls="collapseDay_@workDay.ID">
+                                                        @CommonUtil.NumberToWeekDay(workDay.Number)
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseDay_@workDay.ID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDay_@workDay.ID">
+                                                <div class="panel-body">
+                                                    @{ 
+                                                        int workUnitNumber = 1;
+                                                    }
+                                                    @foreach (WorkUnitBlueprint workUnit in workDay.WorkUnitBlueprints)
+                                                    {
+                                                        <div class="panel panel-primary">
+                                                            <div class="panel-heading panel-primary" role="tab" id="headingUnit_@workUnit.ID">
+                                                                <h4 class="panel-title">
+                                                                    <a role="button" data-toggle="collapse" href="#collapseUnit_@workUnit.ID" aria-expanded="true" aria-controls="collapseUnit_@workUnit.ID">
+                                                                        Unidad de Trabajo @(workUnitNumber++)
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapseUnit_@workUnit.ID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingUnit_@workUnit.ID">
+                                                                <div class="panel-body">
+                                                                    <label>Juego</label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-line">
+                                                                            <input type="text"class="form-control" readonly="readonly" value="@workUnit.Game">
+                                                                        </div>
+                                                                    </div>
+                                                                    <label>Duración</label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="@workUnit.DurationInMinutes minutos">
+                                                                        </div>
+                                                                    </div>
+                                                                    <label>Dificultad</label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="@workUnit.Difficulty">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

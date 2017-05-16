@@ -1,7 +1,7 @@
-﻿@using Apolo.Core.Model.Security
+﻿@using Apolo.Core.Model.Treatment.Blueprints
 @using Apolo.Core.Model
 @{
-    ViewBag.Title = "Pacientes";
+    ViewBag.Title = "Plantillas de Rutina";
 }
 
 @section Styles {
@@ -16,22 +16,20 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Edad</th>
-                        <th>Sexo</th>
+                        <th>Duración en Semanas</th>
+                        <th>Categoría</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var patient in (List<User>)ViewBag.Patients)
+                    @foreach (var routineBlueprint in (List<RoutineBlueprint>)ViewBag.RoutineBlueprints)
                     {
-                        <tr class="patientRowCl">
-                            <input type="hidden" value="@patient.ID" class="patientIdCl" />
-                            <td>@patient.ID</td>
-                            <td>@patient.FirstName</td>
-                            <td>@patient.LastName</td>
-                            <td>@(DateTime.Now.Year - patient.Birthday?.Year)</td>
-                            <td>@patient.Gender</td>
+                        <tr class="routineBlueprintRowCl">
+                            <input type="hidden" value="@routineBlueprint.ID" class="routineBlueprintIdCl" />
+                            <td>@routineBlueprint.ID</td>
+                            <td>@routineBlueprint.Name</td>
+                            <td>@routineBlueprint.DurationInWeeks</td>
+                            <td>@routineBlueprint.Category</td>
                             <td style="text-align: center; width:10%;">
                                 <button type="button" class="btn bg-light-blue waves-effect selectCl">Seleccionar</button>
                             </td>
@@ -49,9 +47,9 @@
     <script>
         $(function () {
             $(".selectCl").click(function () {
-                var rowEl = $(this).closest(".patientRowCl");
-                var id = rowEl.find(".patientIdCl").val();
-                window.location.href = "@Url.Action("SelectPatient", "Patient", new { area = Constants.Areas.THERAPIST })" + "?patientId=" + id;
+                var rowEl = $(this).closest(".routineBlueprintRowCl");
+                var id = rowEl.find(".routineBlueprintIdCl").val();
+                window.location.href = "@Url.Action("SelectRoutineBlueprint", "RoutineBlueprint", new { area = Constants.Areas.THERAPIST })" + "?routineBlueprintId=" + id;
             });
 
             $("#patients-table").DataTable({
@@ -63,7 +61,7 @@
                 },
                 "columnDefs": [
                     {
-                        "targets": [5],
+                        "targets": [4],
                         "orderable": false
                     }
                 ]

@@ -10,21 +10,26 @@
         <li class="header">MENÚ PRINCIPAL</li>
 
         <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Home$", "active")">
-            <a href="@Url.Action("Index", "Home", new { area = "Therapist" })">
+            <a href="@Url.Action("Index", "Home", new { area = Constants.Areas.THERAPIST })">
                 <i class="material-icons">home</i>
                 <span>Inicio</span>
             </a>
         </li>
 
-        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/Patient\/List)", "active")">
-            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist(\/Patient|\/Routine)\/List)", "toggled")">
+        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/(Patient|RoutineBlueprint)\/List)", "active")">
+            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/(Patient|Blueprint)\/List)", "toggled")">
                 <i class="material-icons">adjust</i>
                 <span>Seleccionar</span>
             </a>
-            <ul class="ml-menu" style="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/Patient\/List)", "display: block;", "display: none;")">
+            <ul class="ml-menu" style="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/(Patient|Blueprint)\/List)", "display: block;", "display: none;")">
                 <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/List", "active")">
-                    <a href="@Url.Action("List", "Patient", new { area = "Therapist" })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/List", "toggled")">
+                    <a href="@Url.Action("List", "Patient", new { area = Constants.Areas.THERAPIST })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/List", "toggled")">
                         <span>Pacientes</span>
+                    </a>
+                </li>
+                <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/RoutineBlueprint\/List", "active")">
+                    <a href="@Url.Action("List", "RoutineBlueprint", new { area = Constants.Areas.THERAPIST })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/RoutineBlueprint\/List", "toggled")">
+                        <span>Plantillas de Rutina</span>
                     </a>
                 </li>
             </ul>
@@ -40,12 +45,12 @@
             </a>
             <ul class="ml-menu" style="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/(Patient\/Summary|Routine\/(List|Create)))", "display: blocK;", "display: none;")">
                 <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/Summary", "active")">
-                    <a href="@Url.Action("Summary", "Patient", new { area = "Therapist" })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/Summary", "toggled")">
+                    <a href="@Url.Action("Summary", "Patient", new { area = Constants.Areas.THERAPIST })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/Summary", "toggled")">
                         <span>Resumen</span>
                     </a>
                 </li>
                 <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Routine\/(List|Create)", "active")">
-                    <a href="@Url.Action("List", "Routine", new { area = "Therapist" })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Routine\/(List|Create)", "toggled")">
+                    <a href="@Url.Action("List", "Routine", new { area = Constants.Areas.THERAPIST })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Routine\/(List|Create)", "toggled")">
                         <span>Rutinas</span>
                     </a>
                 </li>

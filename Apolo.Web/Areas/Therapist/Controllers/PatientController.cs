@@ -32,10 +32,10 @@ namespace Apolo.Web.Areas.Therapist.Controllers
             return View();
         }
 
-        public ActionResult SelectPatient(string patientID)
+        public ActionResult SelectPatient(string patientId)
         {
-            OperationResult result = securityService.GetUserByID(Int32.Parse(patientID));
-            Session[Constants.SESSION_PATIENT] = result.RequestedObject as User;
+            OperationResult result = securityService.GetUserByID(Int32.Parse(patientId));
+            Session[Constants.SESSION_PATIENT] = result.RequestedObject;
             return RedirectToAction("Summary");
         }
 

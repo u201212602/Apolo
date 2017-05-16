@@ -190,6 +190,7 @@
     <Compile Include="Areas\Administrator\Controllers\HomeController.cs" />
     <Compile Include="Areas\Patient\Controllers\HomeController.cs" />
     <Compile Include="Areas\Patient\PatientAreaRegistration.cs" />
+    <Compile Include="Areas\Therapist\Controllers\RoutineBlueprintController.cs" />
     <Compile Include="Areas\Therapist\Controllers\HomeController.cs" />
     <Compile Include="Areas\Therapist\Controllers\PatientController.cs" />
     <Compile Include="Areas\Therapist\Controllers\RoutineController.cs" />
@@ -477,6 +478,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Patient\Views\Home\Tetris.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\RoutineBlueprint\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\RoutineBlueprint\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

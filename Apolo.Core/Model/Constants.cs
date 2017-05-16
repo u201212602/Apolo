@@ -10,6 +10,7 @@ namespace Apolo.Core.Model
     {
         public const string SESSION_USER = "SESSION_USER";
         public const string SESSION_PATIENT = "SESSION_PATIENT";
+        public const string SESSION_ROUTINEBLUEPRINT = "SESSION_ROUTINEBLUEPRINT";
 
         public static class Roles
         {
