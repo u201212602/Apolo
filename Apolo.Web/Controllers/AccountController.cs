@@ -51,22 +51,29 @@ namespace Apolo.Web.Controllers
                 User user = operationResult.RequestedObject as User;
                 if(SecurityUtil.GenerateSaltedHash(viewModel.Password, user.Salt.ToString()) == user.Password)
                 {
-                    Session[Constants.SESSION_USER] = user;
-                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(user.Username, true, 6000);
-                    string encryptedTicket = FormsAuthentication.Encrypt(ticket);
-                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                    cookie.HttpOnly = true;
-                    Response.Cookies.Add(cookie);
-
-                    if (!string.IsNullOrEmpty(returnUrl))
-                        return RedirectToLocal(returnUrl);
+                    if(user.Blocked)
+                    {
+                        ViewBag.ErrorMessage = "Usuario bloqueado. Contacte a soporte.";
+                    }
                     else
                     {
-                        switch(user.Role)
+                        Session[Constants.SESSION_USER] = user;
+                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(user.Username, true, 6000);
+                        string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+                        HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                        cookie.HttpOnly = true;
+                        Response.Cookies.Add(cookie);
+
+                        if (!string.IsNullOrEmpty(returnUrl))
+                            return RedirectToLocal(returnUrl);
+                        else
                         {
-                            case Constants.Roles.ADMINISTRATOR: return RedirectToAction("Index", "Home", new { area = Constants.Areas.ADMINISTRATOR });
-                            case Constants.Roles.THERAPIST: return RedirectToAction("List", "Patient", new { area = Constants.Areas.THERAPIST });
-                            case Constants.Roles.PATIENT: return RedirectToAction("Index", "Home", new { area = Constants.Areas.PATIENT });
+                            switch (user.Role)
+                            {
+                                case Constants.Roles.ADMINISTRATOR: return RedirectToAction("List", "User", new { area = Constants.Areas.ADMINISTRATOR });
+                                case Constants.Roles.THERAPIST: return RedirectToAction("List", "Patient", new { area = Constants.Areas.THERAPIST });
+                                case Constants.Roles.PATIENT: return RedirectToAction("Index", "Home", new { area = Constants.Areas.PATIENT });
+                            }
                         }
                     }
                 }

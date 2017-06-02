@@ -7,7 +7,7 @@
 }
 <div class="card horizontal">
     <div class="card-image">
-        <img src="@Url.Action("GameAvatar", "Util", new { gameName = workUnit.Game, area = "" })" width="90" height="190">
+        <img src="@Url.Action("GameAvatar", "Util", new { gameName = workUnit.Game, area = "" })" style="height: 150px; width: 150px; background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;">
     </div>
     <div class="card-stacked">
         <div class="card-content">
@@ -33,7 +33,7 @@
         @if (!workUnit.IsFinished)
         {
             <div class="card-action">
-                <a href="@Url.Action("PlayWorkUnit", "Home", new { area = Constants.Areas.PATIENT, patientId = patient.ID, workUnitId = workUnit.ID })">Click aquí para jugar</a>
+                <a href="@Url.Action("Index", "Play", new { area = Constants.Areas.PATIENT, workUnitId = workUnit.ID })" style="font-weight: 900;">Click aquí para jugar</a>
             </div>
         }
     </div>

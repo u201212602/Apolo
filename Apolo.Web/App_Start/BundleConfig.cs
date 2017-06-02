@@ -14,7 +14,7 @@ namespace Apolo.Web
             bundles.Add(new ScriptBundle("~/bundles/form").Include(
                         "~/Assets/plugins/jquery-validate/js/jquery.validate.js",
                         "~/Assets/plugins/jquery-validate/js/messages_es.js",
-                        "~/Assets/plugins/bootstrap-select/js/bootstrap-select.min.js",
+                        "~/Assets/plugins/bootstrap-select/js/bootstrap-select.js",
                         "~/Assets/plugins/moment/js/moment.min.js",
                         "~/Assets/plugins/bootstrap-material-datepicker/js/bootstrap-material-datetimepicker.js"));
 

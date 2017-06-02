@@ -1,0 +1,135 @@
+﻿@using Apolo.Core.Model.Treatment
+@{
+    ViewBag.Title = "Jugando Tetris";
+    var workUnit = ViewBag.WorkUnit as WorkUnit;
+}
+
+@section Styles {
+    @Styles.Render("~/Assets/games/tetris/blockrain.css")
+}
+
+<div class="game" style="width:800px; height:800px; position: absolute; left: 50%; top: 3%; transform: translate(-50%, 0);"></div>
+
+<div id="clock" style="box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.2);">
+
+</div>
+
+<div id="completion-message" style="display: none; box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.2);">
+    Completado!&nbsp;&nbsp;&nbsp;<a href="@Url.Action("Index", "Home", new { @area = "Patient" })" class="waves-effect waves-light btn"><i class="material-icons left">done</i>Regresar</a>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+            function getUnitDurationInMinutes() {
+                return new Date(new Date().valueOf() + @workUnit.DurationInMinutes * 60 * 1000);
+            }
+
+            var $clock = $('#clock');
+
+            $clock.countdown(getUnitDurationInMinutes(), function (event) {
+                $(this).html(event.strftime('%M:%S'));
+            })
+            .on("finish.countdown", function () {
+                $.post('@Url.Action("CompleteWorkUnit", "Play", new { @area = "Patient", workUnitId = workUnit.ID })', function () {
+                    $("#clock").hide();
+                    $("#completion-message").show();
+                });
+            });
+
+            //$clock.countdown('pause');
+    </script>
+    @Scripts.Render("~/Assets/plugins/myo/js/myo.js")
+    @Scripts.Render("~/Assets/games/tetris/blockrain.jquery.js")
+
+    <script>
+        var gameState = 0;
+        $('.game')
+            .blockrain({
+                playText: 'Double tap para empezar a jugar!',
+                scoreText: 'Puntos',
+                onGameOver: function(score) {
+                    gameState = 3;
+                },
+                speed: 3,
+                blockWidth: 8
+            });
+
+        var myMyo;
+
+        Myo.on('connected',
+            function() {
+                myMyo = this;
+                Myo.setLockingPolicy("none");
+                myMyo.unlock();
+                addEvents(myMyo);
+            });
+
+        Myo.connect();
+
+        var tempHelper = 0;
+        var tresholdX = 10;
+        var tresholdZ = 8;
+        var tresholdSeconds = 0.3;
+        var lastTimeMoved = new Date();
+
+        var addEvents = function(myo) {
+            myo.on("imu",
+                function(data) {
+                    if (tempHelper >= 3000) {
+                        tempHelper = 0;
+                        return;
+                    }
+                    tempHelper++;
+                    var dx = Math.floor(data.gyroscope.y * 1);
+                    if (dx > tresholdX) {
+                        console.log("moving right");
+                        var currentTime = new Date();
+                        var passedSeconds = (currentTime - lastTimeMoved) / 1000;
+                        if (passedSeconds > tresholdSeconds) {
+                            mMoveRight(true);
+                            mMoveRight(false);
+                            lastTimeMoved = currentTime;
+                        }
+                    } else if (dx < -tresholdX) {
+                        console.log("moving left");
+                        var currentTime = new Date();
+                        var passedSeconds = (currentTime - lastTimeMoved) / 1000;
+                        if (passedSeconds > tresholdSeconds) {
+                            mMoveLeft(true);
+                            mMoveLeft(false);
+                            lastTimeMoved = currentTime;
+                        }
+                    }
+                });
+            myo.on('pose',
+                function(name) {
+                    if (name == "double_tap") {
+                        if (gameState == 0) {
+                            $('.game').blockrain("start");
+                            gameState = 1; // started
+                        } else if (gameState == 1) {
+                            $('.game').blockrain("pause");
+                            gameState = 2; // paused
+                        } else if (gameState == 2) {
+                            $('.game').blockrain("resume");
+                            gameState = 1; // started
+                        } else if (gameState == 3) {
+                            $('.game').blockrain("restart");
+                            gameState = 1; // started
+                        }
+                    } else if (name == "wave_in") {
+                        mRotateLeft();
+                    } else if (name == "wave_out") {
+                        mRotateRight();
+                    } else if (name == "fist") {
+                        mDrop(true);
+                    }
+                });
+            myo.on("pose_off", function(name) {
+                if (name == "fist_off") {
+                    mDrop(false);
+                }
+            });
+        }
+    </script>
+}

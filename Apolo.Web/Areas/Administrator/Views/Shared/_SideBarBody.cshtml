@@ -3,10 +3,16 @@
 <div class="menu">
     <ul class="list">
         <li class="header">MENÚ PRINCIPAL</li>
-        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Administrator\/Home)", "active")">
+        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Administrator\/Home", "active")">
             <a href="@Url.Action("Index","Home", new { area = "Administrator" })">
                 <i class="material-icons">home</i>
                 <span>Inicio</span>
+            </a>
+        </li>
+        <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Administrator\/User\/List", "active")">
+            <a href="@Url.Action("List","User", new { area = "Administrator" })">
+                <i class="material-icons">person</i>
+                <span>Usuarios</span>
             </a>
         </li>
     </ul>

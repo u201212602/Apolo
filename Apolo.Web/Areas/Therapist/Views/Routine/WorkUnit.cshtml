@@ -1,0 +1,44 @@
+﻿@using Apolo.Core.Model.Treatment
+@using Apolo.Core.Model
+@using Apolo.Core.Util
+@using Apolo.Web.Util
+@{
+    WorkUnit workUnit = ViewBag.WorkUnit as WorkUnit;
+}
+
+<input type="hidden" class="workUnitIdCl" value="@workUnit.ID" />
+<label>Juego</label>
+<div class="form-group">
+    <select class="form-control selectpicker gameCl">
+        <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.PONG, small = "small", area = "" })" value="@Constants.Games.PONG" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.PONG)>@Constants.Games.PONG</option>
+        <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.TETRIS, small = "small", area = "" })" value="@Constants.Games.TETRIS" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.TETRIS)>@Constants.Games.TETRIS</option>
+        <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.INVADERS, small = "small", area = "" })" value="@Constants.Games.INVADERS" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.INVADERS)>@Constants.Games.INVADERS</option>
+    </select>
+</div>
+<label>Duración (minutos)</label>
+<div class="form-group">
+    <input type="number" class="form-control durationCl" value="@workUnit.DurationInMinutes">
+</div>
+<label>Dificultad</label>
+<div class="form-group">
+    <select class="form-control selectpicker difficultyCl">
+        <option value="@Constants.Games.Difficulty.EASY" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Difficulty == Constants.Games.Difficulty.EASY)>@Constants.Games.Difficulty.EASY</option>
+        <option value="@Constants.Games.Difficulty.MEDIUM" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Difficulty == Constants.Games.Difficulty.MEDIUM)>@Constants.Games.Difficulty.MEDIUM</option>
+        <option value="@Constants.Games.Difficulty.HARD" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Difficulty == Constants.Games.Difficulty.HARD)>@Constants.Games.Difficulty.HARD</option>
+    </select>
+</div>
+@if (workUnit.IsFinished)
+{
+    <label>Puntaje</label>
+    <div class="form-group">
+        <input type="text" class="form-control" value="@workUnit.FinalScore" readonly="readonly">
+    </div>
+}
+@if (!workUnit.IsFinished)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-block bg-light-blue waves-effect editCl" type="button">Historial (@workUnit.WorkUnitEditions.Count) / Editar</button>
+        </div>
+    </div>
+}

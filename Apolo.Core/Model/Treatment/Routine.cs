@@ -43,10 +43,57 @@ namespace Apolo.Core.Model.Treatment
         {
             get
             {
-                int diffDays = (DateTime.Now - StartDate).Days;
-                double value = diffDays / (DurationInWeeks * 7.0) * 100.0;
-                value = value >= 100.0 ? 100.0 : value;
-                return (int)value;
+                int totalDays = 0;
+
+                foreach(var workWeek in WorkWeeks)
+                {
+                    totalDays += workWeek.WorkDays.Count;
+                }
+
+                return FinishedDaysCount / totalDays * 100;
+            }
+        }
+
+        public int FinishedWeeksCount
+        {
+            get
+            {
+                int result = 0;
+
+                foreach(var workWeek in WorkWeeks)
+                {
+                    foreach(var workDay in workWeek.WorkDays)
+                    {
+                        if(!workDay.IsFinished)
+                        {
+                            return result;
+                        }
+                    }
+                    result++;
+                }
+
+                return result;
+            }
+        }
+
+        public int FinishedDaysCount
+        {
+            get
+            {
+                int result = 0;
+
+                foreach(var workWeek in WorkWeeks)
+                {
+                    foreach(var workDay in workWeek.WorkDays)
+                    {
+                        if(workDay.IsFinished)
+                        {
+                            result++;
+                        }
+                    }
+                }
+
+                return result;
             }
         }
     }

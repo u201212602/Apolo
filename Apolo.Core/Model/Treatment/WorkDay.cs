@@ -6,6 +6,7 @@ namespace Apolo.Core.Model.Treatment
     public class WorkDay
     {
         public int ID { get; set; }
+        public int Number { get; set; }
         public DateTime Date { get; set; }
 
 

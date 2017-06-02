@@ -31,7 +31,6 @@ namespace Apolo.Core.Data
         public DbSet<Routine> Routines { get; set; }
         public DbSet<RoutineBlueprint> RoutineBlueprints { get; set; }
         public DbSet<WorkDay> WorkDays { get; set; }
-
-        public System.Data.Entity.DbSet<Apolo.Core.Model.Treatment.WorkUnit> WorkUnits { get; set; }
+        public DbSet<WorkUnit> WorkUnits { get; set; }
     }
 }

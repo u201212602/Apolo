@@ -188,7 +188,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\UserController.cs" />
     <Compile Include="Areas\Patient\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Patient\Controllers\PlayController.cs" />
     <Compile Include="Areas\Patient\PatientAreaRegistration.cs" />
     <Compile Include="Areas\Therapist\Controllers\RoutineBlueprintController.cs" />
     <Compile Include="Areas\Therapist\Controllers\HomeController.cs" />
@@ -217,6 +219,15 @@
     <Content Include="Assets\css\real-materialize.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\themes.css" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\arrow.png" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\leftHook.png" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\leftZag.png" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\line.png" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\rightHook.png" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\rightZag.png" />
+    <Content Include="Assets\games\tetris\assets\blocks\custom\square.png" />
+    <Content Include="Assets\games\tetris\blockrain.css" />
+    <Content Include="Assets\games\tetris\blockrain.jquery.js" />
     <Content Include="Assets\img\defaultGameAvatar.png" />
     <Content Include="Assets\img\invaders.png" />
     <Content Include="Assets\img\pong.png" />
@@ -317,7 +328,6 @@
     <Content Include="Assets\plugins\jquery-slimscroll\js\jquery.slimscroll.min.js" />
     <Content Include="Assets\plugins\sweetalert\css\sweetalert.css" />
     <Content Include="Assets\plugins\sweetalert\js\sweetalert.min.js" />
-    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -390,9 +400,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Administrator\Views\_ViewStart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Administrator\Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Therapist\Views\Patient\Index.cshtml" />
@@ -468,22 +475,31 @@
     <Content Include="Areas\Patient\Views\Home\_WorkUnitCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Patient\Views\Home\PlayWorkUnit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Patient\Views\Home\Invaders.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Patient\Views\Home\Pong.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Patient\Views\Home\Tetris.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Therapist\Views\RoutineBlueprint\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Therapist\Views\RoutineBlueprint\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Play\Invaders.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Play\Pong.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Play\Tetris.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Administrator\Views\User\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Routine\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Routine\WorkUnitEdition.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Routine\WorkUnit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

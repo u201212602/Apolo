@@ -18,21 +18,53 @@ namespace Apolo.Core.Business
             return new OperationResult { RequestedObject = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId) };
         }
 
-        public OperationResult CompleteWorkUnitById(int workUnitId)
+        public OperationResult CompleteWorkUnitById(int workUnitId, int finalScore)
         {
             var workUnit = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId);
 
             if(workUnit != null)
             {
                 workUnit.IsFinished = true;
+                workUnit.FinalScore = finalScore;
                 context.SaveChanges();
             }
 
             return new OperationResult();
         }
+
+        public OperationResult UpdateWorkUnit(int workUnitId, string rationale, int durationInMinutes, string game, string difficulty)
+        {
+            var workUnit = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId);
+
+            if (workUnit != null)
+            {
+                workUnit.DurationInMinutes = durationInMinutes;
+                workUnit.Game = game;
+                workUnit.Difficulty = difficulty;
+
+                var workUnitEdition = new WorkUnitEdition
+                {
+                    WorkUnitID = workUnitId,
+                    Rationale = rationale,
+                    DateTime = DateTime.Now
+                };
+
+                workUnit.WorkUnitEditions.Add(workUnitEdition);
+
+                context.SaveChanges();
+            }
+
+            return new OperationResult();
+        }
+
         public OperationResult GetRoutinesForUsername(string username)
         {
             return new OperationResult { RequestedObject = context.Routines.Where( x => x.Patient.Username == username ).ToList() };
+        }
+
+        public OperationResult GetRoutineByUserId(int routineId)
+        {
+            return new OperationResult { RequestedObject = context.Routines.SingleOrDefault( x => x.ID == routineId) };
         }
 
         public OperationResult GetWorkDayForToday(string username)

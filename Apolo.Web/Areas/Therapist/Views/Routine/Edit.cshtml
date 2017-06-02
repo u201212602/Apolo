@@ -1,0 +1,259 @@
+﻿@using Apolo.Core.Model.Treatment
+@using Apolo.Core.Model
+@using Apolo.Core.Util
+@using Apolo.Web.Util
+@{
+    Routine routine = ViewBag.Routine as Routine;
+    ViewBag.Title = "Routina #" + routine.ID + ", paciente " + routine.Patient.FirstName + " " + routine.Patient.LastName;
+}
+@section Styles {
+    @Styles.Render("~/Assets/css/form")
+    @Styles.Render("~/Assets/plugins/sweetalert/css/sweetalert.css")
+}
+@{ 
+    string completedWorkUnitPanelStyle = "border: 1px solid #2b982b;";
+    string completedWorkUnitPanelH4Style = "background-color: #2b982b; color: #fff;";
+
+    string pendingWorkUnitPanelStyle = "border: 1px solid #808080;";
+    string pendingWorkUnitPanelH4Style = "background-color: #808080; color: #fff;";
+}
+
+<div class="card">
+    <div class="header">
+        <h2>Datos</h2>
+    </div>
+    <div class="body" style="padding-bottom: 0;">
+        <div class="row">
+            <div class="col-md-6" style="margin-bottom: 0;">
+                <label for="nombre">Objetivo</label>
+                <div class="form-group">
+                    <input type="text" id="name" class="form-control" readonly="readonly" value="@routine.Goal">
+                </div>
+                <label for="duration">Fecha de Inicio</label>
+                <div class="form-group">
+                    <input type="text" id="duration" class="form-control" readonly="readonly" value="@string.Format("{0:dd/MM/yyyy}", routine.StartDate)">
+                </div>
+                <label for="duration">Duración</label>
+                <div class="form-group">
+                    <input type="text" id="duration" class="form-control" readonly="readonly" value="@routine.DurationInWeeks semanas">
+                </div>
+                <label for="category">Avance</label>
+                <div class="form-group">
+                    <div class="progress" style="margin-bottom: 0;">
+                        @if (routine.EllapsedPercentage >= 100)
+                        {
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            </div>
+                        }
+                        else if (routine.EllapsedPercentage > 0)
+                        {
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="@(routine.EllapsedPercentage)" aria-valuemin="0" aria-valuemax="100" style="width: @(routine.EllapsedPercentage)%">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            </div>
+                        }
+                    </div>
+                    @(routine.EllapsedPercentage)%, @routine.FinishedWeeksCount semanas (@routine.FinishedDaysCount días)
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-bottom: 0;">
+                <label for="description">Detalles</label>
+                <div class="form-group">
+                    <textarea class="form-control" id="description" readonly="readonly" rows="6">@routine.Details</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="header">
+        <h2>Trabajo por Semanas</h2>
+    </div>
+    <div class="body" style="padding-bottom: 0;">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 0;">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    @foreach (WorkWeek workWeek in routine.WorkWeeks)
+                    {
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingWeek_@workWeek.Number">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" href="#collapseWeek_@workWeek.Number" aria-expanded="true" aria-controls="collapseWeek_@workWeek.Number">
+                                        Semana @(workWeek.Number + 1), del @string.Format("{0:dd/MM/yyyy}", routine.StartDate) al @string.Format("{0:dd/MM/yyyy}", routine.StartDate.AddDays(6))
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseWeek_@workWeek.Number" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingWeek_@workWeek.Number">
+                                <div class="panel-body">
+                                    @foreach (WorkDay workDay in workWeek.WorkDays)
+                                    {
+                                        <div class="panel panel-primary" style="border: 1px solid #4ba7f5">
+                                            <div class="panel-heading" role="tab" id="headingDay_@workDay.ID">
+                                                <h4 class="panel-title" style="color: #fff; background-color: #4ba7f5">
+                                                    <a role="button" data-toggle="collapse" href="#collapseDay_@workDay.ID" aria-expanded="true" aria-controls="collapseDay_@workDay.ID">
+                                                        @CommonUtil.NumberToWeekDay(workDay.Number % 7) @string.Format("{0:dd/MM/yyyy}", workDay.Date)
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseDay_@workDay.ID" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingDay_@workDay.ID">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        @foreach (WorkUnit workUnit in workDay.WorkUnits)
+                                                        {
+                                                            <div class="col-md-4">
+                                                                @{ 
+                                                                    string panelStyle;
+                                                                    string panelTitleStlye;
+                                                                    string readonlyAttr = "";
+                                                                }
+                                                                @if(workUnit.IsFinished)
+                                                                {
+                                                                    panelStyle = completedWorkUnitPanelStyle;
+                                                                    panelTitleStlye = completedWorkUnitPanelH4Style;
+                                                                    readonlyAttr = "readonly=\"readonly\"";
+                                                                }
+                                                                else
+                                                                {
+                                                                    panelStyle = pendingWorkUnitPanelStyle;
+                                                                    panelTitleStlye = pendingWorkUnitPanelH4Style;
+                                                                }
+                                                                <div class="panel panel-primary" style="@panelStyle">
+                                                                    <div class="panel-heading" style="background-color: cyan;" role="tab" id="headingUnit_@workUnit.ID">
+                                                                        <h4 class="panel-title" style="@panelTitleStlye">
+                                                                            <a role="button" data-toggle="collapse" href="#collapseUnit_@workUnit.ID" aria-expanded="true" aria-controls="collapseUnit_@workUnit.ID">
+                                                                                Unidad de Trabajo @(workUnit.Number + 1)
+                                                                            </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseUnit_@workUnit.ID" class="panel-collapse collapse in" role="tabpanel">
+                                                                        <div class="panel-body workUnitCl" id="workUnit-@workUnit.ID">
+                                                                            <input type="hidden" class="workUnitIdCl" value="@workUnit.ID" />
+                                                                            <label>Juego</label>
+                                                                            <div class="form-group">
+                                                                                <select class="form-control selectpicker gameCl">
+                                                                                    <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.PONG, small = "small", area = "" })" value="@Constants.Games.PONG" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.PONG)>@Constants.Games.PONG</option>
+                                                                                    <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.TETRIS, small = "small", area = "" })" value="@Constants.Games.TETRIS" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.TETRIS)>@Constants.Games.TETRIS</option>
+                                                                                    <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.INVADERS, small = "small", area = "" })" value="@Constants.Games.INVADERS" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.INVADERS)>@Constants.Games.INVADERS</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <label>Duración (minutos)</label>
+                                                                            <div class="form-group">
+                                                                                <input type="number" class="form-control durationCl" value="@workUnit.DurationInMinutes" @readonlyAttr>
+                                                                            </div>
+                                                                            <label>Dificultad</label>
+                                                                            <div class="form-group">
+                                                                                <select class="form-control selectpicker difficultyCl">
+                                                                                    <option value="@Constants.Games.Difficulty.EASY" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Difficulty == Constants.Games.Difficulty.EASY)>@Constants.Games.Difficulty.EASY</option>
+                                                                                    <option value="@Constants.Games.Difficulty.MEDIUM" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Difficulty == Constants.Games.Difficulty.MEDIUM)>@Constants.Games.Difficulty.MEDIUM</option>
+                                                                                    <option value="@Constants.Games.Difficulty.HARD" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Difficulty == Constants.Games.Difficulty.HARD)>@Constants.Games.Difficulty.HARD</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            @if (workUnit.IsFinished)
+                                                                            {
+                                                                                <label>Puntaje</label>
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control" value="@workUnit.FinalScore" readonly="readonly">
+                                                                                </div>
+                                                                            }
+                                                                            @if (!workUnit.IsFinished)
+                                                                            {
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12">
+                                                                                        <button class="btn btn-block bg-light-blue waves-effect editCl" type="button">Historial (@workUnit.WorkUnitEditions.Count) / Editar</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                            }
+                                </div>
+                            </div>
+                        </div>
+                                                            }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editWorkUnitModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" style="margin: 3vh auto;">
+        <div class="modal-content workUnitCl" id="modal-content">
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/Assets/plugins/sweetalert/js/sweetalert.min.js")
+    <script>
+        var preloaderHtml = '<div class="preloader pl-size-xl">< div class="spinner-layer pl-light-blue" ><div class="circle-clipper left"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div ></div >';
+
+        function bindAll() {
+            $(".saveCl").click(function () {
+                var rowEl = $(this).closest(".workUnitCl");
+                var _workUnitId = rowEl.find(".workUnitIdCl").val();
+                var _game = rowEl.find(".gameCl").val();
+                var _durationInMinutes = rowEl.find(".durationCl").val();
+                var _difficulty = rowEl.find(".difficultyCl").val();
+                var _rationale = rowEl.find(".rationaleCl").val();
+                $.post('@Url.Action("UpdateWorkUnit", "Routine", new { @area = Constants.Areas.THERAPIST })',
+                    {
+                        workUnitId: _workUnitId,
+                        game: _game,
+                        durationInMinutes: _durationInMinutes,
+                        difficulty: _difficulty,
+                        rationale: _rationale
+                    },
+                    function () {
+                        $("#workUnit-" + _workUnitId).html(preloaderHtml);
+                        swal("Éxito", "Se editó exitosamente la unidad de trabajo!", "success");
+                        $("#workUnit-" + _workUnitId).load("@Url.Action("WorkUnit", "Routine", new { area = Constants.Areas.THERAPIST })?workUnitId=" + _workUnitId,
+                            function () {
+                                $(".editCl").click(function () {
+                                var rowEl = $(this).closest(".workUnitCl");
+                                var id = rowEl.find(".workUnitIdCl").val();
+                                $("#modal-content").load("@Url.Action("WorkUnitEdition", "Routine", new { area = Constants.Areas.THERAPIST })?workUnitId=" + id,
+                                        function () {
+                                            bindAll();
+                                            $("#editWorkUnitModal").modal();
+                                        }
+                                    );
+                                });
+                                $("select.selectpicker").selectpicker();
+                                $("#editWorkUnitModal").modal("hide");
+                            }
+                        );
+                    }
+                );
+            });
+
+            $("select.selectpicker").selectpicker();
+        }
+
+        $(function () {
+            $(".editCl").click(function () {
+                var rowEl = $(this).closest(".workUnitCl");
+                var id = rowEl.find(".workUnitIdCl").val();
+                $("#modal-content").load("@Url.Action("WorkUnitEdition", "Routine", new { area = Constants.Areas.THERAPIST })?workUnitId=" + id,
+                    function () {
+                        bindAll();
+                        $("#editWorkUnitModal").modal();
+                    }
+                );
+            });
+        });
+    </script>
+}

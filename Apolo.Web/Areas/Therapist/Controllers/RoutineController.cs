@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -66,6 +67,34 @@ namespace Apolo.Web.Areas.Therapist.Controllers
             }
 
             return RedirectToAction("List");
+        }
+
+        public ActionResult Edit(int routineId)
+        {
+            var operationResult = routineService.GetRoutineByUserId(routineId);
+            ViewBag.Routine = operationResult.RequestedObject;
+            return View();
+        }
+
+        public PartialViewResult WorkUnitEdition(int workUnitId)
+        {
+            var operationResult = routineService.GetWorkUnitById(workUnitId);
+            ViewBag.WorkUnit = operationResult.RequestedObject;
+            return PartialView();
+        }
+
+        public PartialViewResult WorkUnit(int workUnitId)
+        {
+            var operationResult = routineService.GetWorkUnitById(workUnitId);
+            ViewBag.WorkUnit = operationResult.RequestedObject;
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateWorkUnit(int workUnitId, string game, int durationInMinutes, string difficulty, string rationale)
+        {
+            var operationResult = routineService.UpdateWorkUnit(workUnitId, rationale, durationInMinutes, game, difficulty);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

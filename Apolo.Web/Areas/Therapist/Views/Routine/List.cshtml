@@ -86,6 +86,11 @@
             $(".newRoutineCl").click(function () {
                 window.location.href = "@Url.Action("Create", "Routine", new { area = Constants.Areas.THERAPIST })";
             });
+            $(".selectCl").click(function () {
+                var rowEl = $(this).closest(".routineRowCl");
+                var id = rowEl.find(".routineIDCl").val();
+                window.location.href = "@Url.Action("Edit", "Routine", new { area = Constants.Areas.THERAPIST })?routineId=" + id;
+            });
 
             $("#routines-table").DataTable({
                 "scrollY": "56vh",

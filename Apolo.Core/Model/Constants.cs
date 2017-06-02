@@ -57,7 +57,7 @@ namespace Apolo.Core.Model
             public static class Difficulty
             {
                 public const string EASY = "Fácil";
-                public const string MEDIUM = "Medio";
+                public const string MEDIUM = "Intermedio";
                 public const string HARD = "Difícil";
             }
         }

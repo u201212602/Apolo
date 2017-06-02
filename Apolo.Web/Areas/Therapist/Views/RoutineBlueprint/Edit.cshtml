@@ -55,7 +55,7 @@
                     @foreach (WorkWeekBlueprint workWeek in routineBlueprint.WorkWeekBlueprints)
                     {
                         <div class="panel panel-primary">
-                            <div class="panel-heading panel-primary" role="tab" id="headingWeek_@workWeek.Number">
+                            <div class="panel-heading" role="tab" id="headingWeek_@workWeek.Number">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" href="#collapseWeek_@workWeek.Number" aria-expanded="true" aria-controls="collapseWeek_@workWeek.Number">
                                         Semana @(workWeek.Number + 1)
@@ -66,9 +66,9 @@
                                 <div class="panel-body">
                                     @foreach (WorkDayBlueprint workDay in workWeek.WorkDays)
                                     {
-                                        <div class="panel panel-primary">
-                                            <div class="panel-heading panel-primary" role="tab" id="headingDay_@workDay.ID">
-                                                <h4 class="panel-title">
+                                        <div class="panel panel-primary" style="border: 1px solid #4ba7f5">
+                                            <div class="panel-heading" role="tab" id="headingDay_@workDay.ID">
+                                                <h4 class="panel-title" style="color: #fff; background-color: #4ba7f5">
                                                     <a role="button" data-toggle="collapse" href="#collapseDay_@workDay.ID" aria-expanded="true" aria-controls="collapseDay_@workDay.ID">
                                                         @CommonUtil.NumberToWeekDay(workDay.Number)
                                                     </a>
@@ -76,43 +76,44 @@
                                             </div>
                                             <div id="collapseDay_@workDay.ID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDay_@workDay.ID">
                                                 <div class="panel-body">
-                                                    @{ 
-                                                        int workUnitNumber = 1;
-                                                    }
-                                                    @foreach (WorkUnitBlueprint workUnit in workDay.WorkUnitBlueprints)
-                                                    {
-                                                        <div class="panel panel-primary">
-                                                            <div class="panel-heading panel-primary" role="tab" id="headingUnit_@workUnit.ID">
-                                                                <h4 class="panel-title">
-                                                                    <a role="button" data-toggle="collapse" href="#collapseUnit_@workUnit.ID" aria-expanded="true" aria-controls="collapseUnit_@workUnit.ID">
-                                                                        Unidad de Trabajo @(workUnitNumber++)
-                                                                    </a>
-                                                                </h4>
-                                                            </div>
-                                                            <div id="collapseUnit_@workUnit.ID" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingUnit_@workUnit.ID">
-                                                                <div class="panel-body">
-                                                                    <label>Juego</label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-line">
-                                                                            <input type="text"class="form-control" readonly="readonly" value="@workUnit.Game">
-                                                                        </div>
+                                                    <div class="row">
+                                                        @foreach (WorkUnitBlueprint workUnit in workDay.WorkUnitBlueprints)
+                                                        {
+                                                            <div class="col-md-4">
+                                                                <div class="panel panel-primary" style="border: 1px solid #78bdf7;">
+                                                                    <div class="panel-heading" style="background-color: cyan;" role="tab" id="headingUnit_@workUnit.ID">
+                                                                        <h4 class="panel-title" style="background-color: #78bdf7 !important; color: #fff;">
+                                                                            <a role="button" data-toggle="collapse" href="#collapseUnit_@workUnit.ID" aria-expanded="true" aria-controls="collapseUnit_@workUnit.ID">
+                                                                                Unidad de Trabajo @(workUnit.Number + 1)
+                                                                            </a>
+                                                                        </h4>
                                                                     </div>
-                                                                    <label>Duración</label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-line">
-                                                                            <input type="text" class="form-control" readonly="readonly" value="@workUnit.DurationInMinutes minutos">
-                                                                        </div>
-                                                                    </div>
-                                                                    <label>Dificultad</label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-line">
-                                                                            <input type="text" class="form-control" readonly="readonly" value="@workUnit.Difficulty">
+                                                                    <div id="collapseUnit_@workUnit.ID" class="panel-collapse collapse" role="tabpanel">
+                                                                        <div class="panel-body">
+                                                                            <label>Juego</label>
+                                                                            <div class="form-group">
+                                                                                <div class="form-line">
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@workUnit.Game">
+                                                                                </div>
+                                                                            </div>
+                                                                            <label>Duración</label>
+                                                                            <div class="form-group">
+                                                                                <div class="form-line">
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@workUnit.DurationInMinutes minutos">
+                                                                                </div>
+                                                                            </div>
+                                                                            <label>Dificultad</label>
+                                                                            <div class="form-group">
+                                                                                <div class="form-line">
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@workUnit.Difficulty">
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    }
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

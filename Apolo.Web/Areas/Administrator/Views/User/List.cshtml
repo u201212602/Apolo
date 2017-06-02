@@ -1,0 +1,288 @@
+﻿@using Apolo.Core.Model.Security
+@using Apolo.Core.Model
+@{
+    ViewBag.Title = "Usuarios";
+    User currentUser = Session[Constants.SESSION_USER] as Apolo.Core.Model.Security.User;
+}
+@section Styles {
+    @Styles.Render("~/Assets/css/form")
+    @Styles.Render("~/Assets/plugins/datatables/css/datatables.min.css")
+}
+
+<div class="card">
+    <div class="body">
+        <button type="button" class="btn bg-light-blue waves-effect newUserCl" data-toggle="modal" data-target="#createUserModal">Crear Nuevo Usuario</button>
+    </div>
+</div>
+
+<div class="card" style="height: 70vh;">
+    <div class="card body" style="height: 100%;">
+        <div class="dataTables_wrapper">
+            <table id="users-table" class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Role</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>Sexo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in (List<User>)ViewBag.Users)
+                    {
+                        if (user.ID == currentUser.ID)
+                        {
+                            continue;
+                        }
+                        <tr class="userRowCl">
+                            <input type="hidden" value="@user.ID" class="userIdCl" />
+                            <input type="hidden" value="@user.FirstName" class="firstNameCl" />
+                            <input type="hidden" value="@user.LastName" class="lastNameCl" />
+                            <input type="hidden" value="@user.Gender" class="genderCl" />
+                            <input type="hidden" value="@user.Condition" class="conditionCl" />
+                            <input type="hidden" value="@String.Format("{0:dd/MM/yyyy}", user.Birthday)" class="birthdayCl" />
+                            <input type="hidden" value="@user.Details" class="detailsCl" />
+                            <input type="hidden" value="@user.Username" class="usernameCl" />
+                            <input type="hidden" value="" class="passwordCl" />
+                            <input type="hidden" value="@user.Role" class="roleCl" />
+                            <td>@user.ID</td>
+                            <td><img src="@Url.Action("UserAvatar", "Util", new { username = user.Username, area = "" })" height="45" width="45"/></td>
+                            <td>@user.Role</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@(DateTime.Now.Year - user.Birthday?.Year ?? 0)</td>
+                            <td>@(user.Gender ?? "-")</td>
+                            <td>
+                                <button type="button" class="btn bg-primary waves-effect editCl" data-toggle="modal" data-target="#createUserModal"><i class="material-icons">create</i> Editar</button>&nbsp;&nbsp;
+                                @if (user.Blocked)
+                                {
+                                    <button type="button" class="btn waves-effect bg-success unblockCl"><i class="material-icons">lock_open</i> Desbloquear</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn waves-effect bg-danger blockCl"><i class="material-icons">lock_outline</i> Bloquear</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="margin: 3vh auto;">
+        <div class="modal-content">
+@using (Html.BeginForm("Save", "User", FormMethod.Post, new { enctype = "multipart/form-data", area = "Administrator" }))
+{
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Usuario</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="ID" id="userId" value="" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Role" class="control-label">Rol</label>
+                        <div class="form-group">
+                            <select name="Role" class="form-control selectpicker" id="role">
+                                <option value="@Constants.Roles.PATIENT" selected="selected">@Constants.Roles.PATIENT</option>
+                                <option value="@Constants.Roles.THERAPIST">@Constants.Roles.THERAPIST</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="FirstName" class="control-label">Nombres</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="FirstName" id="firstName"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="FirstName" class="control-label">Apellidos</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="LastName" id="lastName"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Gender" class="control-label">Sexo</label>
+                        <div class="form-group">
+                            <select name="Gender" class="form-control selectpicker" id="gender">
+                                <option value="@Constants.Genders.MALE" selected="selected">@Constants.Genders.MALE</option>
+                                <option value="@Constants.Genders.FEMALE">@Constants.Genders.FEMALE</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Condition" class="control-label">Condición (Paciente)</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="Condition" id="condition"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Details" class="control-label">Detalles</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <textarea rows="3" class="form-control" name="Details" id="details"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Birthday" class="control-label">Fecha de Nacimiento</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control datepicker" name="Birthdayx" id="birthday"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Username" class="control-label">Nombre de Usuario</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="Username" id="username"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Password" class="control-label">Contraseña</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="Password" id="password"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Image" class="control-label">Imagen</label>
+                        <div class="form-group">
+                            <input type="file" class="form-control" name="Image" id="image"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success waves-effect">Guardar</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+}
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/Assets/plugins/datatables/js/datatables.min.js")
+
+    <script>
+        $(function () {
+            $(".datepicker").bootstrapMaterialDatePicker({
+                clearText: 'Borrar',
+                cancelText: 'Cancelar',
+                format: 'DD/MM/YYYY',
+                lang: 'es',
+                clearButton: true,
+                weekStart: 1,
+                time: false
+            });
+
+            $(".newUserCl").click(function () {
+                $("#userId").val("");
+                $("#firstName").val("");
+                $("#lastName").val("");
+                $("#gender").val("");
+                $("#condition").val("");
+                $("#birthday").val("");
+                $("#details").val("");
+                $("#usernameX").val("");
+                $("#role").val("");
+
+                $("#password").val("");
+                $("#image").val("");
+            });
+
+            $(".editCl").click(function () {
+                var rowEl = $(this).closest(".userRowCl");
+
+                var id = rowEl.find(".userIdCl").val();
+                var firstName = rowEl.find(".firstNameCl").val();
+                var lastName = rowEl.find(".lastNameCl").val();
+                var gender = rowEl.find(".genderCl").val();
+                var condition = rowEl.find(".conditionCl").val();
+                var birthday = rowEl.find(".birthdayCl").val();
+                var details = rowEl.find(".detailsCl").val();
+                var username = rowEl.find(".usernameCl").val();
+                var role = rowEl.find(".roleCl").val();
+
+                $("#userId").val(id);
+                $("#firstName").val(firstName);
+                $("#lastName").val(lastName);
+                $("#gender").val(gender);
+                $("#condition").val(condition);
+                $("#birthday").val(birthday);
+                $("#details").val(details);
+                $("#username").val(username);
+                $("#role").val(role);
+
+                $("#password").val("");
+                $("#image").val("");
+            });
+
+            $(".blockCl").click(function () {
+                var rowEl = $(this).closest(".userRowCl");
+                var id = rowEl.find(".userIdCl").val();
+                window.location.href = "@Url.Action("Block", "User", new { area = Constants.Areas.ADMINISTRATOR })" + "?userId=" + id;
+            });
+
+            $(".unblockCl").click(function () {
+                var rowEl = $(this).closest(".userRowCl");
+                var id = rowEl.find(".userIdCl").val();
+                window.location.href = "@Url.Action("Unblock", "User", new { area = Constants.Areas.ADMINISTRATOR })" + "?userId=" + id;
+            });
+
+            $("#users-table").DataTable({
+                "scrollY": "56vh",
+                "scrollCollapse": false,
+                "paging": false,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "columnDefs": [
+                    {
+                        width: "230px",
+                        targets: 7
+                    },
+                    {
+                        "targets": [1, 7],
+                        "orderable": false
+                    }
+                ]
+            });
+        });
+    </script>
+}

@@ -1,16 +1,16 @@
 ﻿@using Apolo.Core.Model.Treatment
 @{
-    ViewBag.Title = "PlayWorkUnit";
+    ViewBag.Title = "Jugando Invasores Espaciales";
     var workUnit = ViewBag.WorkUnit as WorkUnit;
 }
 
 <canvas id='game' width="1250" height="800" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -57%); background-color: black;"></canvas>
 
-<div id="clock">
+<div id="clock" style="box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.2);">
 
 </div>
 
-<div id="completion-message" style="display: none;">
+<div id="completion-message" style="display: none; box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.2);">
     Completado!&nbsp;&nbsp;&nbsp;<a href="@Url.Action("Index", "Home", new { @area = "Patient" })" class="waves-effect waves-light btn"><i class="material-icons left">done</i>Regresar</a>
 </div>
 
@@ -24,12 +24,19 @@
 
         $clock.countdown(getUnitDurationInMinutes(), function (event) {
             $(this).html(event.strftime('%M:%S'));
-        })
-        .on("finish.countdown", function () {
-            $.post('@Url.Action("CompleteWorkUnit", "Home", new { @area = "Patient", workUnitId = workUnit.ID })', function () {
-                $("#clock").hide();
-                $("#completion-message").show();
-            });
+        }).on("finish.countdown", function () {
+            var _workUnitId = '@workUnit.ID';
+            var _finalScore = Game.points;
+            $.post('@Url.Action("CompleteWorkUnit", "Play", new { @area = "Patient" })',
+                {
+                    workUnitId: _workUnitId,
+                    finalScore: _finalScore
+                },
+                function () {
+                    $("#clock").hide();
+                    $("#completion-message").show();
+                }
+            );
         });
 
         //$clock.countdown('pause');

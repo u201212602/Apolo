@@ -24,24 +24,5 @@ namespace Apolo.Web.Areas.Patient.Controllers
             ViewBag.WorkDayForToday = workDayForToday;
             return View();
         }
-
-        public ActionResult PlayWorkUnit(int patientId, int workUnitId)
-        {
-            var workUnit = routineService.GetWorkUnitById(workUnitId).RequestedObject as WorkUnit;
-            ViewBag.WorkUnit = workUnit;
-            switch(workUnit.Game)
-            {
-                case Constants.Games.INVADERS: return View("Invaders");
-                case Constants.Games.PONG: return View("Pong");
-                case Constants.Games.TETRIS: return View("Tetris");
-            }
-            return View();
-        }
-
-        public ActionResult CompleteWorkUnit(int workUnitId)
-        {
-            routineService.CompleteWorkUnitById(workUnitId);
-            return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
-        }
     }
 }

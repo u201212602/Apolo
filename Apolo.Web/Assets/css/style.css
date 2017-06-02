@@ -10150,7 +10150,7 @@ fieldset[disabled] .form-control {
                 -ms-box-shadow: none;
                 box-shadow: none;
                 cursor: pointer;
-                color: #fff;
+                color: dimgray;
             }
 
     .sidebar .menu {

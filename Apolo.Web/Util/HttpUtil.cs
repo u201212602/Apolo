@@ -14,5 +14,10 @@ namespace Apolo.Web.Util
 
             return regex.IsMatch(context.Request.Path) ? output : outputIfNotMatches;
         }
+
+        public static string OutputIfCondition(string output, bool condition)
+        {
+            return condition ? output : "";
+        }
     }
 }
