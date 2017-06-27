@@ -9,6 +9,7 @@ namespace Apolo.Core.Business.Common
     public class OperationResult
     {
         public bool WasSuccessful { get; set; } = true;
+        public string ErrorMessage { get; set; }
 
         public object RequestedObject { get; set; }
     }

@@ -624,6 +624,7 @@ var mDrop;
           if( numLines >= scores.length ){ numLines = scores.length-1 }
 
           this.score += scores[numLines];
+          _finalScore += scores[numLines];
           game._$scoreText.text(this.score);
 
           game.options.onLine.call(game.element, numLines, scores[numLines], this.score);

@@ -57,14 +57,14 @@
                             <td>@(DateTime.Now.Year - user.Birthday?.Year ?? 0)</td>
                             <td>@(user.Gender ?? "-")</td>
                             <td>
-                                <button type="button" class="btn bg-primary waves-effect editCl" data-toggle="modal" data-target="#createUserModal"><i class="material-icons">create</i> Editar</button>&nbsp;&nbsp;
+                                <button type="button" class="btn btn-primary waves-effect editCl" data-toggle="modal" data-target="#createUserModal">Editar</button>&nbsp;&nbsp;
                                 @if (user.Blocked)
                                 {
-                                    <button type="button" class="btn waves-effect bg-success unblockCl"><i class="material-icons">lock_open</i> Desbloquear</button>
+                                    <button type="button" class="btn btn-success waves-effect unblockCl">Desbloquear</button>
                                 }
                                 else
                                 {
-                                    <button type="button" class="btn waves-effect bg-danger blockCl"><i class="material-icons">lock_outline</i> Bloquear</button>
+                                    <button type="button" class="btn btn-danger waves-effect blockCl">Bloquear</button>
                                 }
                             </td>
                         </tr>
@@ -101,7 +101,7 @@
                         <label for="FirstName" class="control-label">Nombres</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="FirstName" id="firstName"/>
+                                <input type="text" class="form-control" name="FirstName" id="firstName" required/>
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                         <label for="FirstName" class="control-label">Apellidos</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="LastName" id="lastName"/>
+                                <input type="text" class="form-control" name="LastName" id="lastName" required/>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                     <div class="col-md-12">
                         <label for="Gender" class="control-label">Sexo</label>
                         <div class="form-group">
-                            <select name="Gender" class="form-control selectpicker" id="gender">
+                            <select name="Gender" class="form-control selectpicker" id="gender" required>
                                 <option value="@Constants.Genders.MALE" selected="selected">@Constants.Genders.MALE</option>
                                 <option value="@Constants.Genders.FEMALE">@Constants.Genders.FEMALE</option>
                             </select>
@@ -142,7 +142,7 @@
                         <label for="Details" class="control-label">Detalles</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <textarea rows="3" class="form-control" name="Details" id="details"></textarea>
+                                <textarea rows="3" class="form-control" name="Details" id="details" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                         <label for="Birthday" class="control-label">Fecha de Nacimiento</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" class="form-control datepicker" name="Birthdayx" id="birthday"/>
+                                <input type="text" class="form-control datepicker" name="Birthdayx" id="birthday" required/>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                         <label for="Username" class="control-label">Nombre de Usuario</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="Username" id="username"/>
+                                <input type="text" class="form-control" name="Username" id="username" required/>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                         <label for="Password" class="control-label">Contraseña</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="Password" id="password"/>
+                                <input type="text" class="form-control" name="Password" id="password" required/>
                             </div>
                         </div>
                     </div>
@@ -201,6 +201,8 @@
 
     <script>
         $(function () {
+            $("form").validate();
+
             $(".datepicker").bootstrapMaterialDatePicker({
                 clearText: 'Borrar',
                 cancelText: 'Cancelar',
@@ -222,8 +224,13 @@
                 $("#usernameX").val("");
                 $("#role").val("");
 
+                $("#role").selectpicker("refresh");
+                $("#gender").selectpicker("refresh");
+
                 $("#password").val("");
                 $("#image").val("");
+
+                $("#password").attr("required", "required");
             });
 
             $(".editCl").click(function () {
@@ -249,8 +256,13 @@
                 $("#username").val(username);
                 $("#role").val(role);
 
+                $("#role").selectpicker("refresh");
+                $("#gender").selectpicker("refresh");
+
                 $("#password").val("");
                 $("#image").val("");
+
+                $("#password").removeAttr("required");
             });
 
             $(".blockCl").click(function () {

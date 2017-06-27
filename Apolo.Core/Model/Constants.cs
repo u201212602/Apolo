@@ -53,6 +53,7 @@ namespace Apolo.Core.Model
             public const string PONG = "Pong";
             public const string TETRIS = "Tetris";
             public const string INVADERS = "Invasores";
+            public const string JUMPER = "Jumper";
 
             public static class Difficulty
             {
@@ -61,6 +62,8 @@ namespace Apolo.Core.Model
                 public const string HARD = "Difícil";
             }
         }
+
+        
 
         public static class Routines
         {

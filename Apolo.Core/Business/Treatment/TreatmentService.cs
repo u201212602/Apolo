@@ -3,7 +3,9 @@ using Apolo.Core.Data;
 using Apolo.Core.Model;
 using Apolo.Core.Model.Treatment;
 using Apolo.Core.Model.Treatment.Blueprints;
+using Apolo.Core.Util;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -13,12 +15,22 @@ namespace Apolo.Core.Business
     {
         ApoloContext context = new ApoloContext();
 
+        public OperationResult GetWorkDayById(int workDayId)
+        {
+            return new OperationResult { RequestedObject = context.WorkDays.SingleOrDefault(x => x.ID == workDayId) };
+        }
+
+        public OperationResult GetWorkWeekById(int workWeekId)
+        {
+            return new OperationResult { RequestedObject = context.WorkWeeks.SingleOrDefault(x => x.ID == workWeekId) };
+        }
+
         public OperationResult GetWorkUnitById(int workUnitId)
         {
             return new OperationResult { RequestedObject = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId) };
         }
 
-        public OperationResult CompleteWorkUnitById(int workUnitId, int finalScore)
+        public OperationResult CompleteWorkUnitById(int workUnitId, int finalScore, WorkUnitCompletion workUnitCompletion)
         {
             var workUnit = context.WorkUnits.SingleOrDefault(x => x.ID == workUnitId);
 
@@ -26,6 +38,7 @@ namespace Apolo.Core.Business
             {
                 workUnit.IsFinished = true;
                 workUnit.FinalScore = finalScore;
+                CommonUtil.CopyPropertiesTo(workUnitCompletion, workUnit);
                 context.SaveChanges();
             }
 
@@ -57,12 +70,17 @@ namespace Apolo.Core.Business
             return new OperationResult();
         }
 
-        public OperationResult GetRoutinesForUsername(string username)
+        public OperationResult GetRoutinesByUsername(string username)
         {
             return new OperationResult { RequestedObject = context.Routines.Where( x => x.Patient.Username == username ).ToList() };
         }
 
-        public OperationResult GetRoutineByUserId(int routineId)
+        public OperationResult GetRoutinesByPatientId(int patientId)
+        {
+            return new OperationResult { RequestedObject = context.Routines.Where(x => x.Patient.ID == patientId).ToList() };
+        }
+
+        public OperationResult GetRoutineById(int routineId)
         {
             return new OperationResult { RequestedObject = context.Routines.SingleOrDefault( x => x.ID == routineId) };
         }
@@ -151,6 +169,21 @@ namespace Apolo.Core.Business
             context.SaveChanges();
 
             operationResult.RequestedObject = routine;
+
+            return operationResult;
+        }
+
+        public OperationResult DeleteRoutineById(int routineId)
+        {
+            var operationResult = new OperationResult();
+
+            var routine = context.Routines.SingleOrDefault(x => x.ID == routineId);
+
+            if(routine != null)
+            {
+                context.Routines.Remove(routine);
+                context.SaveChanges();
+            }
 
             return operationResult;
         }

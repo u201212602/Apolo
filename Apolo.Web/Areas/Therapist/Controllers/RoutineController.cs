@@ -28,7 +28,7 @@ namespace Apolo.Web.Areas.Therapist.Controllers
         public ActionResult List()
         { 
             User sessionPatient = Session[Constants.SESSION_PATIENT] as User;
-            OperationResult result = routineService.GetRoutinesForUsername(sessionPatient.Username);
+            OperationResult result = routineService.GetRoutinesByUsername(sessionPatient.Username);
             ViewBag.Routines = result.RequestedObject;
             return View();
         }
@@ -71,7 +71,7 @@ namespace Apolo.Web.Areas.Therapist.Controllers
 
         public ActionResult Edit(int routineId)
         {
-            var operationResult = routineService.GetRoutineByUserId(routineId);
+            var operationResult = routineService.GetRoutineById(routineId);
             ViewBag.Routine = operationResult.RequestedObject;
             return View();
         }
@@ -94,6 +94,13 @@ namespace Apolo.Web.Areas.Therapist.Controllers
         public ActionResult UpdateWorkUnit(int workUnitId, string game, int durationInMinutes, string difficulty, string rationale)
         {
             var operationResult = routineService.UpdateWorkUnit(workUnitId, rationale, durationInMinutes, game, difficulty);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int routineId)
+        {
+            var operationResult = routineService.DeleteRoutineById(routineId);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }

@@ -1,0 +1,304 @@
+﻿@using Apolo.Core.Model.Treatment
+@using Apolo.Core.Model
+@using Apolo.Core.Util
+@using Apolo.Web.Util
+@{
+    WorkDay workDay = ViewBag.WorkDay as WorkDay;
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="defaultModalLabel">Estadísticas para @CommonUtil.NumberToWeekDay(workDay.Number % 7) @string.Format("{0:dd/MM/yyyy}", workDay.Date)</h4>
+</div>
+<div class="modal-body">
+    <div class="row" style="text-align:center;">
+        <h4 style="text-align:center;">Aceleración Lateral Promedio</h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgAccelYGraph" ></div>
+        </div>
+    </div>
+    <hr size="7" />
+    <div class="row" style="text-align:center;">
+        <h4 style="text-align:center;">Rango de Movimiento Lateral Promedio</h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgRomYGraph" ></div>
+        </div>
+    </div>
+    <hr size="7" />
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 0 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod0" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 1 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod1" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 2 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod2" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 3 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod3" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 4 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod4" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 5 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod5" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 6 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod6" ></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 7 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod7" ></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cerrar</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+    Morris.Bar({
+        element: 'avgAccelYGraph',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgAccelY.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgRomYGraph',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgRomY.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod0',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod0.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod1',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod1.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod2',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod2.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod3',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod3.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod4',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod4.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod5',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod5.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod6',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod6.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+    Morris.Bar({
+        element: 'avgPod7',
+        data: [
+            @for(int i = 0; i < workDay.WorkUnits.Count; i++)
+            {
+                var workUnit = workDay.WorkUnits.ElementAt(i);
+                <text>
+                { game: '@workUnit.Game', value: @(workUnit.AvgPod7.ToString("0.0000")) }@if (i < workDay.WorkUnits.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'game',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        barColors: function (row, series, type) {
+            console.log("--> " + row.label, series, type);
+            if (row.label == "Tetris") return "#F06292";
+            else if (row.label == "Invasores") return "#4DD0E1";
+            else if (row.label == "Pong") return "#AED581";
+            else if (row.label == "Jumper") return "#FF8A65";
+        }
+    });
+</script>

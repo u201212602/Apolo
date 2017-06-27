@@ -9,6 +9,7 @@
 @section Styles {
     @Styles.Render("~/Assets/css/form")
     @Styles.Render("~/Assets/plugins/sweetalert/css/sweetalert.css")
+    @Styles.Render("~/Assets/plugins/morris/css/morris.css")
 }
 @{ 
     string completedWorkUnitPanelStyle = "border: 1px solid #2b982b;";
@@ -66,6 +67,11 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn bg-red waves-effect pull-right routineDataCl" data-work-day-id="@routine.ID" type="button">Estadísticas de rutina</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -82,9 +88,16 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading" role="tab" id="headingWeek_@workWeek.Number">
                                 <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" href="#collapseWeek_@workWeek.Number" aria-expanded="true" aria-controls="collapseWeek_@workWeek.Number">
-                                        Semana @(workWeek.Number + 1), del @string.Format("{0:dd/MM/yyyy}", routine.StartDate) al @string.Format("{0:dd/MM/yyyy}", routine.StartDate.AddDays(6))
-                                    </a>
+                                    <div class="row">
+                                        <div class="col-md-8" style="margin-bottom: 0;">
+                                            <a role="button" style="color:white;" data-toggle="collapse" href="#collapseWeek_@workWeek.Number" aria-expanded="true" aria-controls="collapseWeek_@workWeek.Number">
+                                                Semana @(workWeek.Number + 1), del @string.Format("{0:dd/MM/yyyy}", routine.StartDate) al @string.Format("{0:dd/MM/yyyy}", routine.StartDate.AddDays(6))
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4" style="margin-bottom: 0;">
+                                            <button class="btn bg-lime waves-effect pull-right workWeekDataCl" style="right:3px; margin-top: 3px;" data-work-week-id="@workWeek.ID" type="button">Estadísticas de esta semana</button>
+                                        </div>
+                                    </div>
                                 </h4>
                             </div>
                             <div id="collapseWeek_@workWeek.Number" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingWeek_@workWeek.Number">
@@ -94,9 +107,16 @@
                                         <div class="panel panel-primary" style="border: 1px solid #4ba7f5">
                                             <div class="panel-heading" role="tab" id="headingDay_@workDay.ID">
                                                 <h4 class="panel-title" style="color: #fff; background-color: #4ba7f5">
-                                                    <a role="button" data-toggle="collapse" href="#collapseDay_@workDay.ID" aria-expanded="true" aria-controls="collapseDay_@workDay.ID">
-                                                        @CommonUtil.NumberToWeekDay(workDay.Number % 7) @string.Format("{0:dd/MM/yyyy}", workDay.Date)
-                                                    </a>
+                                                    <div class="row">
+                                                        <div class="col-md-8" style="margin-bottom: 0;">
+                                                            <a role="button" style="color:white;" data-toggle="collapse" href="#collapseDay_@workDay.ID" aria-expanded="true" aria-controls="collapseDay_@workDay.ID">
+                                                                @CommonUtil.NumberToWeekDay(workDay.Number % 7) @string.Format("{0:dd/MM/yyyy}", workDay.Date)
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-4" style="margin-bottom: 0;">
+                                                            <button class="btn bg-orange waves-effect pull-right workDayDataCl" style="right:3px; margin-top: 3px;" data-work-day-id="@workDay.ID" type="button">Estadísticas de este día</button>
+                                                        </div>
+                                                    </div>
                                                 </h4>
                                             </div>
                                             <div id="collapseDay_@workDay.ID" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingDay_@workDay.ID">
@@ -138,6 +158,7 @@
                                                                                     <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.PONG, small = "small", area = "" })" value="@Constants.Games.PONG" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.PONG)>@Constants.Games.PONG</option>
                                                                                     <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.TETRIS, small = "small", area = "" })" value="@Constants.Games.TETRIS" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.TETRIS)>@Constants.Games.TETRIS</option>
                                                                                     <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.INVADERS, small = "small", area = "" })" value="@Constants.Games.INVADERS" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.INVADERS)>@Constants.Games.INVADERS</option>
+                                                                                    <option data-thumbnail="@Url.Action("GameAvatar", "Util", new { gameName = Constants.Games.JUMPER, small = "small", area = "" })" value="@Constants.Games.JUMPER" @HttpUtil.OutputIfCondition("selected=\"selected\"", workUnit.Game == Constants.Games.JUMPER)>@Constants.Games.JUMPER</option>
                                                                                 </select>
                                                                             </div>
                                                                             <label>Duración (minutos)</label>
@@ -158,15 +179,153 @@
                                                                                 <div class="form-group">
                                                                                     <input type="text" class="form-control" value="@workUnit.FinalScore" readonly="readonly">
                                                                                 </div>
-                                                                            }
-                                                                            @if (!workUnit.IsFinished)
-                                                                            {
-                                                                                <div class="row">
-                                                                                    <div class="col-xs-12">
-                                                                                        <button class="btn btn-block bg-light-blue waves-effect editCl" type="button">Historial (@workUnit.WorkUnitEditions.Count) / Editar</button>
+                                                                                <div class="dataWrapperCl">
+                                                                                    <div class="row">
+                                                                                        <div class="col-xs-12">
+                                                                                            <button class="btn btn-block bg-indigo waves-effect showDataCl" type="button">Mostrar Datos</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row dataCl" style="display: none;">
+                                                                                        <div class="col-xs-12">
+                                                                                            <label>Aceleración promedio</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgAccelY.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Mínima aceleración (izquierda)</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowAccelY.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Máxima aceleración (derecha)</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighAccelY.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Rango de movimiento promedio</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgRomY.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Mínimo rango de movimiento (izquierda)</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowRomY.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Máximo rango de movimiento (derecha)</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighRomY.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 0</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod0.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 0</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod0.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 0</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod0.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 1</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod1.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 1</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod1.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 1</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod1.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 2</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod2.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 2</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod2.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 2</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod2.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 3</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod3.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 3</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod3.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 3</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod3.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 4</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod4.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 4</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod4.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 4</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod4.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 5</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod5.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 5</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod5.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 5</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod5.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 6</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod6.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 6</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod6.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 6</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod6.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <hr />
+                                                                                            <label>Activación promedio Pod 7</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.AvgPod7.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación mínima Pod 7</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.LowPod7.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                            <label>Activación máxima Pod 7</label>
+                                                                                            <div class="form-group">
+                                                                                                <div class="form-control">@workUnit.HighPod7.ToString("0.0000000")</div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
+
                                                                             }
+                                                                            <div class="row">
+                                                                                <div class="col-xs-12">
+                                                                                    <button class="btn btn-block bg-light-blue waves-effect editCl" type="button">Historial (@workUnit.WorkUnitEditions.Count) / Editar</button>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -195,9 +354,33 @@
     </div>
 </div>
 
+<div id="preloaderStuff" style="display: none;">
+    <div class="modal-header">
+        <h4 class="modal-title" id="defaultModalLabel">Cargando</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <div class="preloader pl-size-xl">
+                    <div class="spinner-layer pl-teal">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts {
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/Assets/plugins/sweetalert/js/sweetalert.min.js")
+    @Scripts.Render("~/Assets/plugins/raphael/js/raphael.min.js")
+    @Scripts.Render("~/Assets/plugins/morris/js/morris.js")
     <script>
         var preloaderHtml = '<div class="preloader pl-size-xl">< div class="spinner-layer pl-light-blue" ><div class="circle-clipper left"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div ></div >';
 
@@ -244,6 +427,48 @@
         }
 
         $(function () {
+            $(".showDataCl").click(function () {
+                var rowEl = $(this).closest(".dataWrapperCl");
+                var dataDiv = rowEl.find(".dataCl");
+                if (dataDiv.is(":visible") == false) {
+                    $(this).text("Ocultar Datos");
+                    dataDiv.toggle();
+                } else {
+                    $(this).text("Mostrar Datos");
+                    dataDiv.toggle();
+                }
+            });
+
+            $(".routineDataCl").click(function () {
+                var routineId = '@routine.ID';
+                $("#modal-content").html($("#preloaderStuff").html());
+                $("#editWorkUnitModal").modal();
+                setTimeout(function () {
+                    $("#modal-content").load("@Url.Action("Routine", "Report", new { area = Constants.Areas.THERAPIST })?routineId=" + routineId);
+                }, 3000);
+
+            });
+
+            $(".workWeekDataCl").click(function () {
+                var workWeekId = $(this).data("work-week-id");
+                $("#modal-content").html($("#preloaderStuff").html());
+                $("#editWorkUnitModal").modal();
+                setTimeout(function () {
+                    $("#modal-content").load("@Url.Action("WorkWeek", "Report", new { area = Constants.Areas.THERAPIST })?workWeekId=" + workWeekId);
+                }, 3000);
+
+            });
+
+            $(".workDayDataCl").click(function () {
+                var workDayId = $(this).data("work-day-id");
+                $("#modal-content").html($("#preloaderStuff").html());
+                $("#editWorkUnitModal").modal();
+                setTimeout(function () {
+                    $("#modal-content").load("@Url.Action("WorkDay", "Report", new { area = Constants.Areas.THERAPIST })?workDayId=" + workDayId);
+                }, 1500);
+
+            });
+
             $(".editCl").click(function () {
                 var rowEl = $(this).closest(".workUnitCl");
                 var id = rowEl.find(".workUnitIdCl").val();

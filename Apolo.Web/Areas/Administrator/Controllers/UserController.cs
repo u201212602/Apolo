@@ -64,7 +64,7 @@ namespace Apolo.Web.Areas.Administrator.Controllers
                 case false:
                     if(isNew)
                     {
-                        TempData["ErrorMessage"] = "Ocurrió un problema al intentar crear el usuario. Contacte a soporte.";
+                        TempData["ErrorMessage"] = operationResult.ErrorMessage ?? "Ocurrió un problema al intentar crear el usuario. Contacte a soporte.";
                     }
                     else
                     {

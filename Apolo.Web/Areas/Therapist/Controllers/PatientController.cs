@@ -36,7 +36,7 @@ namespace Apolo.Web.Areas.Therapist.Controllers
         {
             OperationResult result = securityService.GetUserByID(Int32.Parse(patientId));
             Session[Constants.SESSION_PATIENT] = result.RequestedObject;
-            return RedirectToAction("Summary");
+            return RedirectToAction("List", "Routine");
         }
 
         public ActionResult Summary()

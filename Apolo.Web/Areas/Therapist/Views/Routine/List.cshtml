@@ -2,12 +2,45 @@
 @using Apolo.Core.Model
 @using Apolo.Core.Model.Treatment
 @{
+    User patient = Session[Constants.SESSION_PATIENT] as User;
     ViewBag.Title = "Rutinas";
+    var routines = ViewBag.Routines as List<Routine>;
+    var currentRoutine = -1;
+    foreach(var routine in routines)
+    {
+        if(DateTime.Now >= routine.StartDate
+            && DateTime.Now <= routine.StartDate.AddDays(routine.DurationInWeeks*7))
+        {
+            currentRoutine = routine.ID;
+        }
+    }
 }
 
 @section Styles {
+    @Styles.Render("~/Assets/plugins/sweetalert/css/sweetalert.css")
     @Styles.Render("~/Assets/plugins/datatables/css/datatables.min.css")
 }
+<div class="row clearfix">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">
+        <div class="card">
+            <div class="header">
+                <h2>Información Personal</h2>
+            </div>
+            <div class="body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img style="width: 100%; height: 100%;" src="@Url.Action("UserAvatar", "Util", new { username = patient?.Username, area = "" })" />
+                    </div>
+                    <div class="col-md-8">
+                        <p>@patient.FirstName @patient.LastName</p>
+                        <p>@(DateTime.Now.Year - @patient.Birthday?.Year) años</p>
+                        <p>@patient.Condition</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -37,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var routine in (List<Routine>)ViewBag.Routines)
+                            @foreach (var routine in routines)
                             {
                                 <tr class="routineRowCl">
                                     <input type="hidden" value="@routine.ID" class="routineIDCl" />
@@ -65,8 +98,9 @@
                                             }
                                         </div>
                                     </td>
-                                    <td style="text-align: center; width:10%;">
-                                        <button type="button" class="btn bg-light-blue waves-effect selectCl">Seleccionar</button>
+                                    <td>
+                                        <button type="button" class="btn bg-light-blue waves-effect selectCl">Seleccionar</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-danger waves-effect deleteCl">Eliminar</button>
                                     </td>
                                 </tr>
                             }
@@ -80,12 +114,52 @@
 
 @section scripts {
     @Scripts.Render("~/Assets/plugins/datatables/js/datatables.min.js")
+    @Scripts.Render("~/Assets/plugins/sweetalert/js/sweetalert.min.js")
 
     <script>
         $(function () {
+            var currentRoutine = @currentRoutine;
             $(".newRoutineCl").click(function () {
-                window.location.href = "@Url.Action("Create", "Routine", new { area = Constants.Areas.THERAPIST })";
+                if (currentRoutine >= 0) {
+                    swal(
+                        'Error',
+                        'Ya existe una rutina en curso',
+                        'error'
+                    );
+                } else {
+                    window.location.href = "@Url.Action("Create", "Routine", new { area = Constants.Areas.THERAPIST })";
+                }
             });
+
+            $(".deleteCl").click(function () {
+                var rowEl = $(this).closest(".routineRowCl");
+                var id = rowEl.find(".routineIDCl").val();
+                swal({
+                    title: "¿Está seguro?",
+                    text: "No se podrá deshacer la eliminación de la rutina",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Eliminar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: false
+                }, function () {
+                    $.post('@Url.Action("Delete", "Routine", new { @area = "Therapist" })',
+                    {
+                        routineId: id
+                    },
+                    function () {
+                        rowEl.fadeOut(600, function() {
+                            $(this).remove();
+                            swal("Éxito", "Se eliminó la rutina exitosamente", "success");
+                            if (id == currentRoutine) {
+                                currentRoutine = -1;
+                            }
+                        });
+                    });
+                });
+            });
+
             $(".selectCl").click(function () {
                 var rowEl = $(this).closest(".routineRowCl");
                 var id = rowEl.find(".routineIDCl").val();
@@ -100,6 +174,10 @@
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
                 "columnDefs": [
+                    {
+                        width: "230px",
+                        targets: 6
+                    },
                     {
                         "targets": [6],
                         "orderable": false

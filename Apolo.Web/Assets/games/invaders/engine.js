@@ -145,7 +145,7 @@ var SpriteSheet = new function() {
     this.map = spriteData;
     this.image = new Image();
     this.image.onload = callback;
-    this.image.src = '../../Assets/games/invaders/images/sprites.png';
+    this.image.src = '../../ApoloWebApp/Assets/games/invaders/images/sprites.png';
   };
 
   this.draw = function(ctx,sprite,x,y,frame) {

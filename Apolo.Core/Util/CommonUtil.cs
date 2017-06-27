@@ -14,10 +14,10 @@ namespace Apolo.Core.Util
             {
                 case 0: return "Lunes";
                 case 1: return "Martes";
-                case 2: return "Miércoles";
+                case 2: return "Miercoles";
                 case 3: return "Jueves";
                 case 4: return "Viernes";
-                case 5: return "Sábado";
+                case 5: return "Sabado";
                 case 6: return "Domingo";
                 default: return "X";
             }

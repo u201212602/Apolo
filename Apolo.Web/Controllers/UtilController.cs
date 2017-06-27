@@ -19,7 +19,14 @@ namespace Apolo.Web.Controllers
         {
             OperationResult operationResult = securityService.GetUserByUsername(username);
             User user = operationResult.RequestedObject as User;
-            return File(user.Avatar, "image/png");
+            if(user.Avatar != null && user.Avatar.Length > 0)
+            {
+                return File(user.Avatar, "image/png");
+            }
+            else
+            {
+                return File("~/Assets/img/default-user.png", "image/png");
+            }
         }
 
         public ActionResult GameAvatar(string gameName, string small)
@@ -35,6 +42,7 @@ namespace Apolo.Web.Controllers
                 case Constants.Games.TETRIS: fileName = "tetris.png"; break;
                 case Constants.Games.INVADERS: fileName = "invaders.png"; break;
                 case Constants.Games.PONG: fileName = "pong.png"; break;
+                case Constants.Games.JUMPER: fileName = "jumper.png"; break;
             }
             return File(folder + fileName, "image/png");
         }

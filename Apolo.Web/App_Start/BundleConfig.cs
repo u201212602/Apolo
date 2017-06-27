@@ -27,7 +27,7 @@ namespace Apolo.Web
                       "~/Assets/js/admin.js",
                       "~/Assets/js/helper.js"));
 
-            bundles.Add(new StyleBundle("~/Assets/css").Include(
+            bundles.Add(new StyleBundle("~/Assets/cssx").Include(
                     "~/Assets/plugins/bootstrap/css/bootstrap.css",
                     "~/Assets/plugins/animate/css/animate.css",
                     "~/Assets/plugins/node-waves/css/waves.css",

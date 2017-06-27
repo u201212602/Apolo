@@ -2,7 +2,6 @@
 	var Socket, myoList = {};
 	if(typeof window === 'undefined'){
 	    Socket = require('ws');
-	    console.log("GG");
 	} else {
 		if(!("WebSocket" in window)) console.error('Myo.js : Sockets not supported :(');
 		Socket = WebSocket;

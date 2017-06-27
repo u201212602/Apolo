@@ -15,6 +15,99 @@
 </div>
 
 @section scripts {
+    <script>
+        var _finalScore = 0;
+        var countIMU = 0;
+        var countEMG = 0;
+
+        var _lowAccelY = Number.MAX_VALUE;
+        var _highAccelY = Number.MIN_VALUE;
+        var _avgAccelY = 0;
+
+        var _lowRomY = Number.MAX_VALUE;
+        var _highRomY = Number.MIN_VALUE;
+        var _avgRomY = 0;
+
+        var _lowPod0 = Number.MAX_VALUE;
+        var _highPod0 = Number.MIN_VALUE;
+        var _avgPod0 = 0;
+
+        var _lowPod1 = Number.MAX_VALUE;
+        var _highPod1 = Number.MIN_VALUE;
+        var _avgPod1 = 0;
+
+        var _lowPod2 = Number.MAX_VALUE;
+        var _highPod2 = Number.MIN_VALUE;
+        var _avgPod2 = 0;
+
+        var _lowPod3 = Number.MAX_VALUE;
+        var _highPod3 = Number.MIN_VALUE;
+        var _avgPod3 = 0;
+
+        var _lowPod4 = Number.MAX_VALUE;
+        var _highPod4 = Number.MIN_VALUE;
+        var _avgPod4 = 0;
+
+        var _lowPod5 = Number.MAX_VALUE;
+        var _highPod5 = Number.MIN_VALUE;
+        var _avgPod5 = 0;
+
+        var _lowPod6 = Number.MAX_VALUE;
+        var _highPod6 = Number.MIN_VALUE;
+        var _avgPod6 = 0;
+
+        var _lowPod7 = Number.MAX_VALUE;
+        var _highPod7 = Number.MIN_VALUE;
+        var _avgPod7 = 0;
+
+        function processIMU(data) {
+            countIMU++;
+
+            _lowAccelY = Math.min(_lowAccelY, data.accelerometer.y);
+            _highAccelY = Math.max(_highAccelY, data.accelerometer.y);
+            _avgAccelY = (_avgAccelY * (countIMU - 1) + Math.abs(data.accelerometer.y)) / countIMU;
+
+            _lowRomY = Math.min(_lowRomY, data.gyroscope.y);
+            _highRomY = Math.max(_highRomY, data.gyroscope.y);
+            _avgRomY = (_avgRomY * (countIMU - 1) + Math.abs(data.gyroscope.y)) / countIMU;
+        }
+
+        function processEMG(data) {
+            countEMG++;
+
+            _lowPod0 = Math.min(_lowPod0, data[0]);
+            _highPod0 = Math.max(_highPod0, data[0]);
+            _avgPod0 = (_avgPod0 * (countEMG - 1) + Math.abs(data[0])) / countEMG;
+
+            _lowPod1 = Math.min(_lowPod1, data[1]);
+            _highPod1 = Math.max(_highPod1, data[1]);
+            _avgPod1 = (_avgPod1 * (countEMG - 1) + Math.abs(data[1])) / countEMG;
+
+            _lowPod2 = Math.min(_lowPod2, data[2]);
+            _highPod2 = Math.max(_highPod2, data[2]);
+            _avgPod2 = (_avgPod2 * (countEMG - 1) + Math.abs(data[2])) / countEMG;
+
+            _lowPod3 = Math.min(_lowPod3, data[3]);
+            _highPod3 = Math.max(_highPod3, data[3]);
+            _avgPod3 = (_avgPod3 * (countEMG - 1) + Math.abs(data[3])) / countEMG;
+
+            _lowPod4 = Math.min(_lowPod4, data[4]);
+            _highPod4 = Math.max(_highPod4, data[4]);
+            _avgPod4 = (_avgPod4 * (countEMG - 1) + Math.abs(data[4])) / countEMG;
+
+            _lowPod5 = Math.min(_lowPod5, data[5]);
+            _highPod5 = Math.max(_highPod5, data[5]);
+            _avgPod5 = (_avgPod5 * (countEMG - 1) + Math.abs(data[5])) / countEMG;
+
+            _lowPod6 = Math.min(_lowPod6, data[6]);
+            _highPod6 = Math.max(_highPod6, data[6]);
+            _avgPod6 = (_avgPod6 * (countEMG - 1) + Math.abs(data[6])) / countEMG;
+
+            _lowPod7 = Math.min(_lowPod7, data[7]);
+            _highPod7 = Math.max(_highPod7, data[7]);
+            _avgPod7 = (_avgPod7 * (countEMG - 1) + Math.abs(data[7])) / countEMG;
+        }
+    </script>
     <script type="text/javascript">
         function getUnitDurationInMinutes() {
             return new Date(new Date().valueOf() + @workUnit.DurationInMinutes * 60 * 1000);
@@ -26,11 +119,50 @@
             $(this).html(event.strftime('%M:%S'));
         }).on("finish.countdown", function () {
             var _workUnitId = '@workUnit.ID';
-            var _finalScore = Game.points;
             $.post('@Url.Action("CompleteWorkUnit", "Play", new { @area = "Patient" })',
                 {
                     workUnitId: _workUnitId,
-                    finalScore: _finalScore
+                    finalScore: _finalScore,
+
+                    LowAccelY: _lowAccelY * 20,
+                    HighAccelY: _highAccelY * 20,
+                    AvgAccelY: _avgAccelY * 20,
+
+                    LowRomY: _lowRomY * 20,
+                    HighRomY: _highRomY * 20,
+                    AvgRomY: _avgRomY * 20,
+
+                    LowPod0: _lowPod0 * 20,
+                    HighPod0: _highPod0 * 20,
+                    AvgPod0: _avgPod0 * 20,
+
+                    LowPod1: _lowPod1 * 20,
+                    HighPod1: _highPod1 * 20,
+                    AvgPod1: _avgPod1 * 20,
+
+                    LowPod2: _lowPod2 * 20,
+                    HighPod2: _highPod2 * 20,
+                    AvgPod2: _avgPod2 * 20,
+
+                    LowPod3: _lowPod3 * 20,
+                    HighPod3: _highPod3 * 20,
+                    AvgPod3: _avgPod3 * 20,
+
+                    LowPod4: _lowPod4 * 20,
+                    HighPod4: _highPod4 * 20,
+                    AvgPod4: _avgPod4 * 20,
+
+                    LowPod5: _lowPod5 * 20,
+                    HighPod5: _highPod5 * 20,
+                    AvgPod5: _avgPod5 * 20,
+
+                    LowPod6: _lowPod6 * 20,
+                    HighPod6: _highPod6 * 20,
+                    AvgPod6: _avgPod6 * 20,
+
+                    LowPod7: _lowPod7 * 20,
+                    HighPod7: _highPod7 * 20,
+                    AvgPod7: _avgPod7 * 20
                 },
                 function () {
                     $("#clock").hide();
@@ -61,6 +193,7 @@
         var addEvents = function (myo) {
             myo.on("imu",
                 function (data) {
+                    processIMU(data);
                     if (!PLAYER) return;
                     if (tempHelper >= 10000) {
                         tempHelper = 0;
@@ -73,6 +206,12 @@
                     if (PLAYER.x + dx < 0 || PLAYER.x + dx + PLAYER.w > GAME.width) return;
                     PLAYER.x += dx;
                 });
+            myo.on('connected', function () {
+                myo.streamEMG(true);
+            });
+            myo.on('emg', function (data) {
+                processEMG(data);
+            });
             myo.on('pose',
                 function (name) {
                     if (!GAME && name == "double_tap") {

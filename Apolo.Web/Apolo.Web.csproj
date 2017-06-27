@@ -192,6 +192,7 @@
     <Compile Include="Areas\Patient\Controllers\HomeController.cs" />
     <Compile Include="Areas\Patient\Controllers\PlayController.cs" />
     <Compile Include="Areas\Patient\PatientAreaRegistration.cs" />
+    <Compile Include="Areas\Therapist\Controllers\ReportController.cs" />
     <Compile Include="Areas\Therapist\Controllers\RoutineBlueprintController.cs" />
     <Compile Include="Areas\Therapist\Controllers\HomeController.cs" />
     <Compile Include="Areas\Therapist\Controllers\PatientController.cs" />
@@ -209,6 +210,10 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ApoloDb.mdf" />
+    <Content Include="App_Data\ApoloDb_log.ldf">
+      <DependentUpon>ApoloDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Assets\games\invaders\base.css" />
     <Content Include="Assets\games\invaders\engine.js" />
     <Content Include="Assets\games\invaders\game.js" />
@@ -219,6 +224,74 @@
     <Content Include="Assets\css\real-materialize.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\themes.css" />
+    <Content Include="Assets\games\jumper\assets\bg.png" />
+    <Content Include="Assets\games\jumper\assets\cactus.png" />
+    <Content Include="Assets\games\jumper\assets\coconut.png" />
+    <Content Include="Assets\games\jumper\assets\credit\code.png" />
+    <Content Include="Assets\games\jumper\assets\credit\credit-social-link.png" />
+    <Content Include="Assets\games\jumper\assets\credit\devcredit.png" />
+    <Content Include="Assets\games\jumper\assets\credit\shohan.png" />
+    <Content Include="Assets\games\jumper\assets\font\font.png" />
+    <Content Include="Assets\games\jumper\assets\fruits\banana_01.png" />
+    <Content Include="Assets\games\jumper\assets\fruits\cherry.png" />
+    <Content Include="Assets\games\jumper\assets\fruits\grape.png" />
+    <Content Include="Assets\games\jumper\assets\fruits\pineapple.png" />
+    <Content Include="Assets\games\jumper\assets\fruits\watermelon.png" />
+    <Content Include="Assets\games\jumper\assets\gems-sprite.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\backward.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\b_More.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\credit.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\howToPlay.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\life.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\menu-title.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\pause.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\play.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\quit_.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\restart.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\resume.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\setting.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\sound.png" />
+    <Content Include="Assets\games\jumper\assets\GUI\title_bg.png" />
+    <Content Include="Assets\games\jumper\assets\how-to-play.png" />
+    <Content Include="Assets\games\jumper\assets\platform.png" />
+    <Content Include="Assets\games\jumper\assets\player\monkey.png" />
+    <Content Include="Assets\games\jumper\lib\phaser-debug.js" />
+    <Content Include="Assets\games\jumper\lib\phaser.js" />
+    <Content Include="Assets\games\jumper\lib\phaser.min.js" />
+    <Content Include="Assets\games\jumper\lib\ScreenShake.js" />
+    <Content Include="Assets\games\jumper\script\Boot.js" />
+    <Content Include="Assets\games\jumper\script\Credit.js" />
+    <Content Include="Assets\games\jumper\script\Help.js" />
+    <Content Include="Assets\games\jumper\script\Leaderborad.js" />
+    <Content Include="Assets\games\jumper\script\Main.js" />
+    <Content Include="Assets\games\jumper\script\Menu.js" />
+    <Content Include="Assets\games\jumper\script\objects\Background.js" />
+    <Content Include="Assets\games\jumper\script\objects\fruits.js" />
+    <Content Include="Assets\games\jumper\script\objects\platform.js" />
+    <Content Include="Assets\games\jumper\script\objects\player.js" />
+    <Content Include="Assets\games\jumper\script\Play.js" />
+    <Content Include="Assets\games\jumper\script\Preload.js" />
+    <Content Include="Assets\games\jumper\script\ui\Buttons.js" />
+    <Content Include="Assets\games\jumper\script\ui\Score.js" />
+    <Content Include="Assets\games\jumper\sounds\dap.m4a" />
+    <Content Include="Assets\games\jumper\sounds\dap.mp3" />
+    <Content Include="Assets\games\jumper\sounds\dap.wav" />
+    <Content Include="Assets\games\jumper\sounds\dead.m4a" />
+    <Content Include="Assets\games\jumper\sounds\dead.mp3" />
+    <Content Include="Assets\games\jumper\sounds\dead.wav" />
+    <Content Include="Assets\games\jumper\sounds\fruitGulp.m4a" />
+    <Content Include="Assets\games\jumper\sounds\fruitGulp.mp3" />
+    <Content Include="Assets\games\jumper\sounds\fruitGulp.wav" />
+    <Content Include="Assets\games\jumper\sounds\gemSound.m4a" />
+    <Content Include="Assets\games\jumper\sounds\gemSound.mp3" />
+    <Content Include="Assets\games\jumper\sounds\gemSound.wav" />
+    <Content Include="Assets\games\jumper\sounds\jump.m4a" />
+    <Content Include="Assets\games\jumper\sounds\jump.mp3" />
+    <Content Include="Assets\games\jumper\sounds\jump.wav" />
+    <Content Include="Assets\games\jumper\sounds\menuBg.m4a" />
+    <Content Include="Assets\games\jumper\sounds\menuBg.mp3" />
+    <Content Include="Assets\games\jumper\sounds\menuBg.wav" />
+    <Content Include="Assets\games\pong\bounce.wav" />
     <Content Include="Assets\games\tetris\assets\blocks\custom\arrow.png" />
     <Content Include="Assets\games\tetris\assets\blocks\custom\leftHook.png" />
     <Content Include="Assets\games\tetris\assets\blocks\custom\leftZag.png" />
@@ -228,9 +301,16 @@
     <Content Include="Assets\games\tetris\assets\blocks\custom\square.png" />
     <Content Include="Assets\games\tetris\blockrain.css" />
     <Content Include="Assets\games\tetris\blockrain.jquery.js" />
+    <Content Include="Assets\img\default-user.png" />
     <Content Include="Assets\img\defaultGameAvatar.png" />
     <Content Include="Assets\img\invaders.png" />
+    <Content Include="Assets\img\jumper.png" />
+    <Content Include="Assets\img\myo-pods.png" />
     <Content Include="Assets\img\pong.png" />
+    <Content Include="Assets\img\small\invaders.png" />
+    <Content Include="Assets\img\small\jumper.png" />
+    <Content Include="Assets\img\small\pong.png" />
+    <Content Include="Assets\img\small\tetris.png" />
     <Content Include="Assets\img\tetris.png" />
     <Content Include="Assets\js\admin.js" />
     <Content Include="Assets\js\demo.js" />
@@ -347,7 +427,6 @@
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrator\Models\" />
     <Folder Include="Areas\Patient\Models\" />
     <Folder Include="Areas\Therapist\Models\" />
@@ -500,6 +579,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Therapist\Views\Routine\WorkUnit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\games\jumper\assets\font\font.fnt" />
+    <Content Include="Assets\games\jumper\assets\player\.picasa.ini" />
+    <Content Include="Assets\games\jumper\lib\README.md" />
+    <Content Include="Assets\games\jumper\sounds\dap.ogg" />
+    <Content Include="Assets\games\jumper\sounds\dead.ogg" />
+    <Content Include="Assets\games\jumper\sounds\fruitGulp.ogg" />
+    <Content Include="Assets\games\jumper\sounds\gemSound.ogg" />
+    <Content Include="Assets\games\jumper\sounds\jump.ogg" />
+    <Content Include="Assets\games\jumper\sounds\menuBg.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Patient\Views\Play\Jumper.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Report\WorkDay.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Report\WorkWeek.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Therapist\Views\Report\Routine.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

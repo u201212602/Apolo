@@ -39,11 +39,21 @@ namespace Apolo.Core.Business
         {
             OperationResult operationResult = new OperationResult();
             user.Salt = new Guid();
-            user.Password = SecurityUtil.GenerateSaltedHash(user.Password, user.Salt.ToString());
+            if(!string.IsNullOrEmpty(user.Password))
+            {
+                user.Password = SecurityUtil.GenerateSaltedHash(user.Password, user.Salt.ToString());
+            }
             try
             {
                 if(user.ID == 0) // NEW
                 {
+                    var userByUsername = GetUserByUsername(user.Username)?.RequestedObject;
+                    if(userByUsername != null)
+                    {
+                        operationResult.WasSuccessful = false;
+                        operationResult.ErrorMessage = "El nombre de usuario ingresado ya está siendo utilizado por otro usuario.";
+                        return operationResult;
+                    }
                     context.Users.Add(user);
                 }
                 else // EXISTING

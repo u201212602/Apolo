@@ -9,20 +9,23 @@ using Apolo.Core.Model.Treatment.Blueprints;
 
 namespace Apolo.Core.Data
 {
-    public class ApoloInitializer : System.Data.Entity.DropCreateDatabaseAlways<ApoloContext>
+    public class ApoloInitializer : System.Data.Entity.CreateDatabaseIfNotExists<ApoloContext>
     {
         protected override void Seed(ApoloContext context)
         {
             #region Users
             context.Users.Add(GetAdminUser());
+            
             context.Users.Add(GetTherapistUser());
             foreach(var patient in GetPatientUsers())
             {
                 context.Users.Add(patient);
             }
             context.SaveChanges();
+            
             #endregion
 
+            
             #region Routines
             foreach (var routine in GetRoutines(context))
             {
@@ -30,9 +33,10 @@ namespace Apolo.Core.Data
             }
             context.SaveChanges();
             #endregion
+            
 
             #region Routine Blueprints
-            foreach(var routineBlueprint in GetRoutineBlueprints())
+            foreach (var routineBlueprint in GetRoutineBlueprints())
             {
                 context.RoutineBlueprints.Add(routineBlueprint);
             }
@@ -43,14 +47,22 @@ namespace Apolo.Core.Data
         private User GetAdminUser()
         {
             Guid guid = new Guid();
-            byte[] avatar = System.IO.File.ReadAllBytes(@".\temp\jsandoval.png");
+            byte[] avatar = null;
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\jsandoval.png");
+            }
+            catch(Exception ex)
+            {
+                avatar = null;
+            }
             User user = new User
             {
                 FirstName = "José",
                 LastName = "Sandoval",
                 Birthday = new DateTime(1993, 6, 20),
                 Username = "jsandoval",
-                Password = SecurityUtil.GenerateSaltedHash("jsandoval", guid.ToString()),
+                Password = SecurityUtil.GenerateSaltedHash("6H8M5kSQVWPgRRBqIsmK", guid.ToString()),
                 Salt = guid,
                 Role = Constants.Roles.ADMINISTRATOR,
                 Avatar = avatar
@@ -61,7 +73,15 @@ namespace Apolo.Core.Data
         private User GetTherapistUser()
         {
             Guid guid = new Guid();
-            byte[] avatar = System.IO.File.ReadAllBytes(@".\temp\fcaceres.png");
+            byte[] avatar = null;
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\fcaceres.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             User user = new User
             {
                 FirstName = "Franco",
@@ -82,7 +102,15 @@ namespace Apolo.Core.Data
 
             #region Sheila
             Guid guid = new Guid();
-            byte[] avatar = System.IO.File.ReadAllBytes(@".\temp\sccahua.png");
+            byte[] avatar;
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\sccahua.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             User user = new User
             {
                 FirstName = "Sheila",
@@ -101,7 +129,14 @@ namespace Apolo.Core.Data
 
             #region Tanya
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\tluna.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\tluna.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Tanya",
@@ -120,7 +155,14 @@ namespace Apolo.Core.Data
 
             #region Marcos
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\mdiaz.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\mdiaz.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Marcos",
@@ -139,7 +181,14 @@ namespace Apolo.Core.Data
 
             #region Andrea
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\apereira.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\apereira.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Andrea",
@@ -158,7 +207,14 @@ namespace Apolo.Core.Data
 
             #region Carlos
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\cmendoza.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\cmendoza.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Carlos",
@@ -177,7 +233,14 @@ namespace Apolo.Core.Data
 
             #region Diana
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\dcriollo.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\dcriollo.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Diana",
@@ -196,7 +259,14 @@ namespace Apolo.Core.Data
 
             #region Claudio
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\chulerig.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\chulerig.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Claudio",
@@ -215,7 +285,14 @@ namespace Apolo.Core.Data
 
             #region Luis Renato
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\lrodriguez.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\lrodriguez.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Luis Renato",
@@ -234,7 +311,14 @@ namespace Apolo.Core.Data
 
             #region Cynthia
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\csanchez.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\csanchez.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Cynthia",
@@ -253,7 +337,14 @@ namespace Apolo.Core.Data
 
             #region Milagros
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\mrojas.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\mrojas.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Milagros",
@@ -272,7 +363,14 @@ namespace Apolo.Core.Data
 
             #region Andres
             guid = new Guid();
-            avatar = System.IO.File.ReadAllBytes(@".\temp\aherrera.png");
+            try
+            {
+                avatar = System.IO.File.ReadAllBytes(@".\temp\aherrera.png");
+            }
+            catch (Exception ex)
+            {
+                avatar = null;
+            }
             user = new User
             {
                 FirstName = "Andres",
@@ -329,14 +427,14 @@ namespace Apolo.Core.Data
                         WorkDay = workDay,
                         DurationInMinutes = 1,
                         Number = 0,
-                        Game = Constants.Games.INVADERS,
+                        Game = Constants.Games.PONG,
                         Difficulty = Constants.Games.Difficulty.EASY
                     };
 
                     WorkUnit tetrisWorkUnit = new WorkUnit()
                     {
                         WorkDay = workDay,
-                        DurationInMinutes = 4,
+                        DurationInMinutes = 1,
                         Number = 1,
                         Game = Constants.Games.TETRIS,
                         Difficulty = Constants.Games.Difficulty.MEDIUM
@@ -345,15 +443,25 @@ namespace Apolo.Core.Data
                     WorkUnit invadersWorkUnit = new WorkUnit()
                     {
                         WorkDay = workDay,
-                        DurationInMinutes = 3,
+                        DurationInMinutes = 1,
                         Number = 2,
-                        Game = Constants.Games.PONG,
+                        Game = Constants.Games.INVADERS,
+                        Difficulty = Constants.Games.Difficulty.HARD
+                    };
+
+                    WorkUnit jumperWorkUnit = new WorkUnit()
+                    {
+                        WorkDay = workDay,
+                        DurationInMinutes = 1,
+                        Number = 3,
+                        Game = Constants.Games.JUMPER,
                         Difficulty = Constants.Games.Difficulty.HARD
                     };
 
                     workDay.WorkUnits.Add(pongWorkUnit);
                     workDay.WorkUnits.Add(tetrisWorkUnit);
                     workDay.WorkUnits.Add(invadersWorkUnit);
+                    workDay.WorkUnits.Add(jumperWorkUnit);
 
                     workWeek.WorkDays.Add(workDay);
                 }
@@ -383,7 +491,7 @@ namespace Apolo.Core.Data
                     Routine = routine
                 };
 
-                for (int k = 0; k < 7; k++)
+                for (int k = 0; k < 5; k++)
                 {
                     WorkDay workDay = new WorkDay()
                     {
@@ -397,6 +505,7 @@ namespace Apolo.Core.Data
                         WorkDay = workDay,
                         Number = 0,
                         DurationInMinutes = 5,
+                        Game = Constants.Games.PONG,
                         Difficulty = Constants.Games.Difficulty.EASY,
                         IsFinished = true,
                         FinalScore = 100*k
@@ -407,6 +516,7 @@ namespace Apolo.Core.Data
                         WorkDay = workDay,
                         Number = 1,
                         DurationInMinutes = 4,
+                        Game = Constants.Games.TETRIS,
                         Difficulty = Constants.Games.Difficulty.MEDIUM,
                         IsFinished = true,
                         FinalScore = 100 * k
@@ -417,14 +527,32 @@ namespace Apolo.Core.Data
                         WorkDay = workDay,
                         Number = 2,
                         DurationInMinutes = 3,
+                        Game = Constants.Games.INVADERS,
                         Difficulty = Constants.Games.Difficulty.HARD,
                         IsFinished = true,
                         FinalScore = 100 * k
                     };
 
+                    WorkUnit jumperWorkUnit = new WorkUnit()
+                    {
+                        WorkDay = workDay,
+                        Number = 3,
+                        DurationInMinutes = 3,
+                        Game = Constants.Games.JUMPER,
+                        Difficulty = Constants.Games.Difficulty.HARD,
+                        IsFinished = true,
+                        FinalScore = 100 * k
+                    };
+
+                    SetRandomDataForWorkUnit(pongWorkUnit);
+                    SetRandomDataForWorkUnit(tetrisWorkUnit);
+                    SetRandomDataForWorkUnit(invadersWorkUnit);
+                    SetRandomDataForWorkUnit(jumperWorkUnit);
+
                     workDay.WorkUnits.Add(pongWorkUnit);
                     workDay.WorkUnits.Add(tetrisWorkUnit);
                     workDay.WorkUnits.Add(invadersWorkUnit);
+                    workDay.WorkUnits.Add(jumperWorkUnit);
 
                     workWeek.WorkDays.Add(workDay);
                 }
@@ -528,7 +656,7 @@ namespace Apolo.Core.Data
                         Game = Constants.Games.TETRIS,
                         Number = 0,
                         Difficulty = Constants.Games.Difficulty.EASY,
-                        DurationInMinutes = 3,
+                        DurationInMinutes = 1,
                         WorkDayBlueprint = workDayBlueprint
                     };
 
@@ -537,7 +665,7 @@ namespace Apolo.Core.Data
                         Game = Constants.Games.PONG,
                         Number = 1,
                         Difficulty = Constants.Games.Difficulty.EASY,
-                        DurationInMinutes = 3,
+                        DurationInMinutes = 1,
                         WorkDayBlueprint = workDayBlueprint
                     };
 
@@ -550,9 +678,19 @@ namespace Apolo.Core.Data
                         WorkDayBlueprint = workDayBlueprint
                     };
 
+                    var workUnitBlueprint4 = new WorkUnitBlueprint
+                    {
+                        Game = Constants.Games.JUMPER,
+                        Number = 4,
+                        Difficulty = Constants.Games.Difficulty.EASY,
+                        DurationInMinutes = 1,
+                        WorkDayBlueprint = workDayBlueprint
+                    };
+
                     workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint1);
                     workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint2);
                     workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint3);
+                    workDayBlueprint.WorkUnitBlueprints.Add(workUnitBlueprint4);
 
                     workWeekBlueprint.WorkDays.Add(workDayBlueprint);
                 }
@@ -563,6 +701,23 @@ namespace Apolo.Core.Data
             #endregion
 
             return routineBlueprints;
+        }
+
+        private Random r = new Random((int)DateTime.Now.Ticks);
+
+        private void SetRandomDataForWorkUnit(WorkUnit workUnit)
+        {
+
+            workUnit.AvgAccelY = r.Next(500);
+            workUnit.AvgRomY = r.Next(500);
+            workUnit.AvgPod0 = r.Next(500);
+            workUnit.AvgPod1 = r.Next(500);
+            workUnit.AvgPod2 = r.Next(500);
+            workUnit.AvgPod3 = r.Next(500);
+            workUnit.AvgPod4 = r.Next(500);
+            workUnit.AvgPod5 = r.Next(500);
+            workUnit.AvgPod6 = r.Next(500);
+            workUnit.AvgPod7 = r.Next(500);
         }
     }
 }

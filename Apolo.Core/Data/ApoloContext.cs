@@ -25,6 +25,26 @@ namespace Apolo.Core.Data
                 .WithMany(t => t.SupervisedRoutines)
                 .HasForeignKey(r => r.TherapistID)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<WorkWeek>()
+                .HasRequired(x => x.Routine)
+                .WithMany(x => x.WorkWeeks)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<WorkDay>()
+                .HasRequired(x => x.WorkWeek)
+                .WithMany(x => x.WorkDays)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<WorkUnit>()
+                .HasRequired(x => x.WorkDay)
+                .WithMany(x => x.WorkUnits)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<WorkUnitEdition>()
+                .HasRequired(x => x.WorkUnit)
+                .WithMany(x => x.WorkUnitEditions)
+                .WillCascadeOnDelete(true);
         }
 
         public DbSet<User> Users { get; set; }
@@ -32,5 +52,6 @@ namespace Apolo.Core.Data
         public DbSet<RoutineBlueprint> RoutineBlueprints { get; set; }
         public DbSet<WorkDay> WorkDays { get; set; }
         public DbSet<WorkUnit> WorkUnits { get; set; }
+        public DbSet<WorkWeek> WorkWeeks { get; set; }
     }
 }

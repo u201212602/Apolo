@@ -49,8 +49,8 @@
   <ItemGroup>
     <Compile Include="Business\Common\OperationRequest.cs" />
     <Compile Include="Business\Common\OperationResult.cs" />
-    <Compile Include="Business\RoutineService.cs" />
-    <Compile Include="Business\SecurityService.cs" />
+    <Compile Include="Business\Treatment\TreatmentService.cs" />
+    <Compile Include="Business\Security\SecurityService.cs" />
     <Compile Include="Data\ApoloContext.cs" />
     <Compile Include="Data\ApoloInitializer.cs" />
     <Compile Include="Model\Constants.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="Model\Treatment\WorkUnit.cs" />
     <Compile Include="Model\Treatment\WorkDay.cs" />
     <Compile Include="Model\Treatment\Blueprints\WorkUnitBlueprint.cs" />
+    <Compile Include="Model\Treatment\WorkUnitCompletion.cs" />
     <Compile Include="Model\Treatment\WorkUnitEdition.cs" />
     <Compile Include="Model\Treatment\WorkWeek.cs" />
     <Compile Include="Model\Treatment\Blueprints\WorkWeekBlueprint.cs" />

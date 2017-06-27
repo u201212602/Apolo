@@ -1,0 +1,244 @@
+﻿@using Apolo.Core.Model.Treatment
+@using Apolo.Core.Model
+@using Apolo.Core.Util
+@using Apolo.Web.Util
+@{
+    Routine routine = ViewBag.Routine as Routine;
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="defaultModalLabel">Estadísticas de rutina</h4>
+</div>
+<div class="modal-body">
+    <div class="row" style="text-align:center;">
+        <h4 style="text-align:center;">Aceleración Lateral Promedio</h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgAccelYGraph"></div>
+        </div>
+    </div>
+    <hr size="7" />
+    <div class="row" style="text-align:center;">
+        <h4 style="text-align:center;">Rango de Movimiento Lateral Promedio</h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgRomYGraph"></div>
+        </div>
+    </div>
+    <hr size="7" />
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 0 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod0"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 1 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod1"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 2 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod2"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 3 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod3"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 4 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod4"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 5 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod5"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 6 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod6"></div>
+        </div>
+    </div>
+    <div class="row" style="text-align:center; margin-bottom: 15px;">
+        <h4 style="text-align:center;">Activación Pod 7 <a href="#" data-toggle="popover" title="Myo Pods" data-html="true" data-content="<img src='@Url.Content("~/Assets/img/myo-pods.png")' width='200' />">Pods ?</a></h4>
+        <div class="col-md-12" style="text-align:center;">
+            <div id="avgPod7"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cerrar</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+    Morris.Line({
+        element: 'avgAccelYGraph',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AverageAccelerationY.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgRomYGraph',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AverageRomY.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod0',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod0.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod1',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod1.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod2',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod2.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod3',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod3.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod4',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod4.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod5',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod5.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod6',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod6.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+    Morris.Line({
+        element: 'avgPod7',
+        data: [
+            @for(int i = 0; i < routine.WorkWeeks.Count; i++)
+            {
+                var workWeek = routine.WorkWeeks.ElementAt(i);
+                <text>
+                { avg: 'Semana @workWeek.Number', value: @(workWeek.AveragePod7.ToString("0.0000")) }@if (i < routine.WorkWeeks.Count - 1){<text>,</text>}
+                </text>
+            }
+        ],
+        xkey: 'avg',
+        ykeys: ['value'],
+        labels: ['Valor'],
+        parseTime: false
+    });
+</script>

@@ -44,11 +44,6 @@
                 <span>Paciente</span>
             </a>
             <ul class="ml-menu" style="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"(\/Therapist\/(Patient\/Summary|Routine\/(List|Create)))", "display: blocK;", "display: none;")">
-                <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/Summary", "active")">
-                    <a href="@Url.Action("Summary", "Patient", new { area = Constants.Areas.THERAPIST })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Patient\/Summary", "toggled")">
-                        <span>Resumen</span>
-                    </a>
-                </li>
                 <li class="@HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Routine\/(List|Create)", "active")">
                     <a href="@Url.Action("List", "Routine", new { area = Constants.Areas.THERAPIST })" class=" waves-effect waves-block @HttpUtil.OutputStringIfUrlMatches(HttpContext.Current, @"\/Therapist\/Routine\/(List|Create)", "toggled")">
                         <span>Rutinas</span>
